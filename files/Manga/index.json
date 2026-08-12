@@ -1,0 +1,18 @@
+[
+  {
+    "name": "Solo Leveling",
+    "slug": "solo-leveling",
+    "page": "solo-leveling.html",
+    "cover": "https://picsum.photos/500/750?random=101",
+    "type": "Manga",
+    "genres": [
+      "أكشن",
+      "فانتازيا",
+      "مغامرات"
+    ],
+    "status": "مستمرة",
+    "rating": 9.8,
+    "latestChapter": 2,
+    "latestChapterUrl": "solo-leveling-chapter-2.html"
+  }
+]
