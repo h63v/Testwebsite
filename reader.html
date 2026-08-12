@@ -3,184 +3,239 @@
 
 <head>
 
-  <meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-  <meta
-    name="theme-color"
-    content="#8b5cf6">
+    <meta
+        name="theme-color"
+        content="#0b0b10"
+    >
 
-  <title>
-    Solo Leveling - الفصل 210
-  </title>
+    <title>MangaX Reader</title>
 
-  <style>
+    <style>
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-    body {
-      background: #08080b;
-      color: white;
+        html,
+        body {
+            background: #08080d;
+            color: white;
 
-      font-family:
-        Arial,
-        Tahoma,
-        sans-serif;
-    }
+            font-family:
+                Arial,
+                Tahoma,
+                sans-serif;
+        }
 
+        body {
+            min-height: 100vh;
+        }
 
-    /* HEADER */
+        .reader-header {
 
-    .reader-header {
-      position: sticky;
+            position: sticky;
 
-      top: 0;
+            top: 0;
 
-      z-index: 100;
+            z-index: 100;
 
-      height: 65px;
+            height: 70px;
 
-      background:
-        rgba(15,15,20,.96);
+            display: flex;
 
-      backdrop-filter:
-        blur(15px);
+            align-items: center;
 
-      border-bottom:
-        1px solid #292936;
+            justify-content: space-between;
 
-      display: flex;
+            padding: 0 20px;
 
-      align-items: center;
+            background:
+                rgba(8,8,13,.95);
 
-      justify-content:
-        space-between;
+            backdrop-filter:
+                blur(15px);
 
-      padding:
-        0 5%;
-    }
+            border-bottom:
+                1px solid #252530;
+        }
 
-    .reader-header a {
-      color: white;
+        .reader-logo {
 
-      text-decoration: none;
-    }
+            font-size: 28px;
 
-    .logo {
-      font-size: 22px;
+            font-weight: 900;
+        }
 
-      font-weight: bold;
-    }
+        .reader-logo span {
+            color: #8b5cf6;
+        }
 
-    .logo span {
-      color:
-        #8b5cf6;
-    }
+        .chapter-title {
 
-    .chapter {
-      color: #aaa;
+            color: #bbb;
 
-      font-size: 14px;
-    }
+            font-size: 15px;
 
+            text-align: center;
 
-    /* READER */
+            white-space: nowrap;
 
-    .reader {
-      max-width: 900px;
+            overflow: hidden;
 
-      margin: auto;
-    }
+            text-overflow: ellipsis;
 
-    .page {
-      width: 100%;
+            max-width: 50%;
+        }
 
-      display: block;
+        .close-btn {
 
-      margin: auto;
-    }
+            width: 45px;
 
+            height: 45px;
 
-    /* CONTROLS */
+            border-radius: 12px;
 
-    .controls {
-      padding:
-        30px 15px;
+            border:
+                1px solid #252530;
 
-      display: flex;
+            background: #111119;
 
-      justify-content:
-        center;
+            color: white;
 
-      gap: 10px;
-    }
+            text-decoration: none;
 
-    .controls a,
-    .controls button {
+            display: grid;
 
-      border:
-        1px solid #292936;
+            place-items: center;
 
-      background:
-        #15151d;
+            font-size: 25px;
+        }
 
-      color: white;
+        .reader {
 
-      padding:
-        12px 20px;
+            width: 100%;
 
-      border-radius: 8px;
+            display: flex;
 
-      cursor: pointer;
+            flex-direction: column;
 
-      text-decoration: none;
+            align-items: center;
 
-      font-size: 13px;
+            padding-bottom: 50px;
+        }
 
-    }
+        .page {
 
-    .controls a:hover,
-    .controls button:hover {
+            width: auto;
 
-      background:
-        #8b5cf6;
+            max-width: 100%;
 
-      border-color:
-        #8b5cf6;
+            height: auto;
 
-    }
+            display: block;
 
+            margin: 0 auto;
 
-    /* MOBILE */
+            background: #111;
 
-    @media (max-width: 600px) {
+            object-fit: contain;
+        }
 
-      .chapter {
-        font-size: 11px;
-      }
+        .loading {
 
-      .controls {
-        flex-direction:
-          column;
-      }
+            min-height: 60vh;
 
-      .controls a,
-      .controls button {
-        width: 100%;
+            display: grid;
 
-        text-align: center;
-      }
+            place-items: center;
 
-    }
+            color: #aaa;
 
-  </style>
+            padding: 30px;
+
+            text-align: center;
+        }
+
+        .error {
+
+            min-height: 60vh;
+
+            display: grid;
+
+            place-items: center;
+
+            text-align: center;
+
+            padding: 30px;
+
+            color: #aaa;
+        }
+
+        .error h2 {
+
+            color: white;
+
+            margin-bottom: 10px;
+        }
+
+        .back {
+
+            display: inline-block;
+
+            margin-top: 20px;
+
+            padding: 11px 20px;
+
+            border-radius: 10px;
+
+            background: #8b5cf6;
+
+            color: white;
+
+            text-decoration: none;
+        }
+
+        @media (max-width: 600px) {
+
+            .reader-header {
+                height: 60px;
+
+                padding: 0 10px;
+            }
+
+            .reader-logo {
+                font-size: 23px;
+            }
+
+            .chapter-title {
+                font-size: 12px;
+
+                max-width: 45%;
+            }
+
+            .close-btn {
+                width: 40px;
+                height: 40px;
+            }
+
+            .page {
+                width: 100%;
+
+                max-width: 100%;
+            }
+
+        }
+
+    </style>
 
 </head>
 
@@ -188,102 +243,337 @@
 <body>
 
 
-  <!-- HEADER -->
-
-  <header class="reader-header">
+<header class="reader-header">
 
     <a
-      href="index.html"
-      class="logo">
-
-      Manga<span>X</span>
-
+        href="index.html"
+        class="close-btn">
+        ×
     </a>
 
 
-    <div class="chapter">
-
-      Solo Leveling
-      —
-      الفصل 210
-
+    <div
+        class="chapter-title"
+        id="chapterTitle">
+        جاري تحميل الفصل...
     </div>
 
 
-    <a href="index.html">
-
-      ✕
-
+    <a
+        href="index.html"
+        class="reader-logo">
+        Manga<span>X</span>
     </a>
 
-  </header>
+</header>
 
 
-  <!-- READER -->
+<main
+    class="reader"
+    id="reader">
 
-  <main class="reader">
-
-
-    <!-- صفحة 1 -->
-
-    <img
-      class="page"
-      src="https://picsum.photos/900/1300?random=101"
-      alt="صفحة 1">
-
-
-    <!-- صفحة 2 -->
-
-    <img
-      class="page"
-      src="https://picsum.photos/900/1300?random=102"
-      alt="صفحة 2">
-
-
-    <!-- صفحة 3 -->
-
-    <img
-      class="page"
-      src="https://picsum.photos/900/1300?random=103"
-      alt="صفحة 3">
-
-
-    <!-- صفحة 4 -->
-
-    <img
-      class="page"
-      src="https://picsum.photos/900/1300?random=104"
-      alt="صفحة 4">
-
-
-    <!-- CONTROLS -->
-
-    <div class="controls">
-
-      <a href="#">
-        ← الفصل السابق
-      </a>
-
-      <button
-        onclick="window.scrollTo({
-          top: 0,
-          behavior: 'smooth'
-        })">
-
-        ↑ أعلى الصفحة
-
-      </button>
-
-      <a href="#">
-        الفصل التالي →
-      </a>
-
+    <div class="loading">
+        جاري تحميل صور الفصل...
     </div>
 
+</main>
 
-  </main>
 
+<script>
+
+"use strict";
+
+
+/* =========================================================
+   GET CHAPTER URL
+========================================================= */
+
+const params =
+    new URLSearchParams(
+        window.location.search
+    );
+
+
+const chapterUrl =
+    params.get("chapter");
+
+
+const reader =
+    document.getElementById("reader");
+
+
+const chapterTitle =
+    document.getElementById("chapterTitle");
+
+
+/* =========================================================
+   START
+========================================================= */
+
+if (!chapterUrl) {
+
+    showError(
+        "لم يتم تحديد الفصل."
+    );
+
+} else {
+
+    loadChapter(chapterUrl);
+
+}
+
+
+/* =========================================================
+   LOAD CHAPTER HTML
+========================================================= */
+
+async function loadChapter(url) {
+
+    try {
+
+        chapterTitle.textContent =
+            decodeURIComponent(
+                url.split("/").pop()
+            );
+
+
+        const response =
+            await fetch(url, {
+                cache: "no-store"
+            });
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                `HTTP ${response.status}`
+            );
+
+        }
+
+
+        const html =
+            await response.text();
+
+
+        /*
+           تحويل HTML الفصل إلى Document
+        */
+
+        const parser =
+            new DOMParser();
+
+
+        const documentHTML =
+            parser.parseFromString(
+                html,
+                "text/html"
+            );
+
+
+        /*
+           استخراج كل الصور
+        */
+
+        const images =
+            Array.from(
+                documentHTML.querySelectorAll("img")
+            );
+
+
+        if (!images.length) {
+
+            showError(
+                "لم يتم العثور على أي صور داخل ملف الفصل."
+            );
+
+            return;
+
+        }
+
+
+        reader.innerHTML = "";
+
+
+        /*
+           عرض الصور بالترتيب
+        */
+
+        images.forEach(
+            (originalImage, index) => {
+
+                const image =
+                    document.createElement("img");
+
+
+                let imageUrl =
+                    originalImage.getAttribute("src");
+
+
+                /*
+                   دعم lazy loading
+                */
+
+                if (
+                    !imageUrl ||
+                    imageUrl === "#"
+                ) {
+
+                    imageUrl =
+                        originalImage.getAttribute(
+                            "data-src"
+                        );
+
+                }
+
+
+                if (!imageUrl) return;
+
+
+                /*
+                   تحويل الرابط النسبي
+                   إلى رابط كامل بناءً
+                   على مكان ملف الفصل
+                */
+
+                try {
+
+                    imageUrl =
+                        new URL(
+                            imageUrl,
+                            new URL(
+                                url,
+                                window.location.href
+                            )
+                        ).href;
+
+                } catch (e) {
+
+                    console.error(
+                        "رابط صورة غير صالح:",
+                        imageUrl
+                    );
+
+                    return;
+
+                }
+
+
+                image.className =
+                    "page";
+
+
+                image.loading =
+                    index === 0
+                        ? "eager"
+                        : "lazy";
+
+
+                image.decoding =
+                    "async";
+
+
+                image.src =
+                    imageUrl;
+
+
+                image.alt =
+                    `صفحة ${index + 1}`;
+
+
+                image.onerror =
+                    function () {
+
+                        console.error(
+                            "تعذر تحميل الصورة:",
+                            imageUrl
+                        );
+
+                    };
+
+
+                reader.appendChild(image);
+
+            }
+        );
+
+
+        if (!reader.children.length) {
+
+            showError(
+                "لم يتم العثور على روابط صور صالحة."
+            );
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Reader Error:",
+            error
+        );
+
+
+        showError(
+            "تعذر تحميل ملف الفصل."
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+function showError(message) {
+
+    reader.innerHTML = `
+
+        <div class="error">
+
+            <div>
+
+                <h2>
+                    حدث خطأ
+                </h2>
+
+                <p>
+                    ${escapeHTML(message)}
+                </p>
+
+                <a
+                    href="index.html"
+                    class="back">
+                    العودة للرئيسية
+                </a>
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   ESCAPE
+========================================================= */
+
+function escapeHTML(value) {
+
+    return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+
+}
+
+</script>
 
 </body>
-
 </html>
