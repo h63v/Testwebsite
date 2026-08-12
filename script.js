@@ -1,69 +1,111 @@
-/* ================= MOBILE MENU ================= */
+/* =====================================================
+   MOBILE MENU
+===================================================== */
 
-const menuBtn = document.getElementById("menuBtn");
-const navigation = document.querySelector(".navigation");
+const menuBtn =
+  document.getElementById("menuBtn");
+
+const navigation =
+  document.querySelector(".navigation");
 
 menuBtn.addEventListener("click", () => {
+
   navigation.classList.toggle("show");
+
 });
 
 
-/* ================= SEARCH ================= */
+/* =====================================================
+   SEARCH
+===================================================== */
 
-const searchToggle = document.getElementById("searchToggle");
-const searchPanel = document.getElementById("searchPanel");
-const searchInput = document.getElementById("searchInput");
-const clearSearch = document.getElementById("clearSearch");
+const searchToggle =
+  document.getElementById("searchToggle");
+
+const searchPanel =
+  document.getElementById("searchPanel");
+
+const searchInput =
+  document.getElementById("searchInput");
+
+const clearSearch =
+  document.getElementById("clearSearch");
+
+const mangaCards =
+  document.querySelectorAll(".manga-card");
+
+const noResults =
+  document.getElementById("noResults");
+
+const mangaCount =
+  document.getElementById("mangaCount");
+
 
 searchToggle.addEventListener("click", () => {
 
   searchPanel.classList.toggle("show");
 
-  if (searchPanel.classList.contains("show")) {
+  if (
+    searchPanel.classList.contains("show")
+  ) {
+
     searchInput.focus();
+
   }
 
 });
 
 
-clearSearch.addEventListener("click", () => {
+searchInput.addEventListener(
+  "input",
+  () => {
 
-  searchInput.value = "";
+    filterManga(
+      searchInput.value
+    );
 
-  filterManga("");
-
-  searchInput.focus();
-
-});
+  }
+);
 
 
-searchInput.addEventListener("input", () => {
+clearSearch.addEventListener(
+  "click",
+  () => {
 
-  filterManga(searchInput.value);
+    searchInput.value = "";
 
-});
+    filterManga("");
+
+    searchInput.focus();
+
+  }
+);
 
 
 function filterManga(value) {
 
-  const cards = document.querySelectorAll(".manga-card");
+  const query =
+    value
+      .toLowerCase()
+      .trim();
 
-  const query = value.toLowerCase().trim();
+  let visible = 0;
 
-  cards.forEach(card => {
+  mangaCards.forEach(card => {
 
     const title =
-      card.dataset.title.toLowerCase();
-
-    const category =
-      card.dataset.category.toLowerCase();
+      card
+        .dataset
+        .title
+        .toLowerCase();
 
     if (
-      title.includes(query) ||
-      category.includes(query)
+      title.includes(query)
     ) {
 
       card.style.display = "";
+
+      visible++;
 
     } else {
 
@@ -73,85 +115,155 @@ function filterManga(value) {
 
   });
 
+
+  if (visible === 0) {
+
+    noResults.style.display =
+      "block";
+
+  } else {
+
+    noResults.style.display =
+      "none";
+
+  }
+
+
+  if (query === "") {
+
+    mangaCount.textContent =
+      `${mangaCards.length} مانجا`;
+
+  } else {
+
+    mangaCount.textContent =
+      `${visible} نتيجة`;
+
+  }
+
 }
 
 
-/* ================= FAVORITES ================= */
+/* =====================================================
+   FAVORITES
+===================================================== */
 
-document.querySelectorAll(".favorite").forEach(button => {
+document
+  .querySelectorAll(".favorite")
+  .forEach(button => {
 
-  button.addEventListener("click", (event) => {
+    button.addEventListener(
+      "click",
+      event => {
 
-    event.preventDefault();
-    event.stopPropagation();
+        event.preventDefault();
 
-    button.classList.toggle("active");
+        event.stopPropagation();
 
-    if (button.classList.contains("active")) {
+        button.classList.toggle(
+          "active"
+        );
 
-      button.textContent = "♥";
+        if (
+          button.classList.contains(
+            "active"
+          )
+        ) {
 
-    } else {
+          button.textContent = "♥";
 
-      button.textContent = "♡";
+        } else {
 
-    }
+          button.textContent = "♡";
+
+        }
+
+      }
+    );
 
   });
 
-});
 
-
-/* ================= THEME ================= */
+/* =====================================================
+   THEME
+===================================================== */
 
 const themeBtn =
   document.getElementById("themeBtn");
 
-themeBtn.addEventListener("click", () => {
 
-  document.body.classList.toggle("light");
+themeBtn.addEventListener(
+  "click",
+  () => {
 
-  if (document.body.classList.contains("light")) {
+    document.body
+      .classList
+      .toggle("light");
 
-    themeBtn.textContent = "☀";
 
-    localStorage.setItem("theme", "light");
+    if (
+      document.body.classList.contains(
+        "light"
+      )
+    ) {
 
-  } else {
+      themeBtn.textContent = "☀";
 
-    themeBtn.textContent = "☾";
+      localStorage.setItem(
+        "theme",
+        "light"
+      );
 
-    localStorage.setItem("theme", "dark");
+    } else {
+
+      themeBtn.textContent = "☾";
+
+      localStorage.setItem(
+        "theme",
+        "dark"
+      );
+
+    }
 
   }
+);
 
-});
 
+/* =====================================================
+   LOAD SAVED THEME
+===================================================== */
 
-/* ================= LOAD THEME ================= */
+if (
+  localStorage.getItem("theme")
+  === "light"
+) {
 
-if (localStorage.getItem("theme") === "light") {
-
-  document.body.classList.add("light");
+  document.body
+    .classList
+    .add("light");
 
   themeBtn.textContent = "☀";
 
 }
 
 
-/* ================= CLOSE MOBILE MENU ================= */
+/* =====================================================
+   CLOSE MOBILE MENU
+===================================================== */
 
-document.querySelectorAll(".navigation a").forEach(link => {
+document
+  .querySelectorAll(".navigation a")
+  .forEach(link => {
 
-  link.addEventListener("click", () => {
+    link.addEventListener(
+      "click",
+      () => {
 
-    navigation.classList.remove("show");
+        navigation
+          .classList
+          .remove("show");
+
+      }
+    );
 
   });
-
-});        link.addEventListener('click', function() {
-            navLinks.forEach(item => item.classList.remove('active'));
-            this.classList.add('active');
-        });
-    });
-});
