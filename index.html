@@ -2,612 +2,260 @@
 <html lang="ar" dir="rtl">
 
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0b0b10">
 
-    <meta
-        name="theme-color"
-        content="#8b5cf6">
+    <title>MangaX - عالم المانجا والمانهوا</title>
 
-    <title>MangaX - عالم المانجا</title>
-
-    <link
-        rel="stylesheet"
-        href="style.css">
-
+    <link rel="stylesheet" href="style.css">
 </head>
 
-
 <body>
-
-
-<!-- =====================================================
-     HEADER
-===================================================== -->
 
 <header class="header">
 
     <div class="header-inner">
 
-
-        <!-- LOGO -->
-
-        <a
-            href="index.html"
-            class="logo">
-
+        <a href="index.html" class="logo">
             Manga<span>X</span>
-
         </a>
 
-
-        <!-- NAVIGATION -->
-
         <nav class="navigation">
-
-            <a
-                href="#home"
-                class="active">
-
-                الرئيسية
-
-            </a>
-
-
-            <a href="#latest">
-
-                الأحدث
-
-            </a>
-
-
-            <a href="#popular">
-
-                الأكثر قراءة
-
-            </a>
-
+            <a href="#home">الرئيسية</a>
+            <a href="#latest">أحدث الأعمال</a>
+            <a href="#popular">الأكثر قراءة</a>
         </nav>
-
-
-        <!-- HEADER ACTIONS -->
 
         <div class="header-actions">
 
-
-            <button
-                class="icon-btn"
-                id="themeBtn"
-                type="button"
-                title="تغيير المظهر">
-
-                ☾
-
-            </button>
-
-
-            <button
-                class="icon-btn"
-                id="searchToggle"
-                type="button"
-                title="البحث">
-
+            <button class="icon-btn" id="searchToggle" aria-label="البحث">
                 ⌕
-
             </button>
 
+            <button class="icon-btn" id="themeBtn" aria-label="تغيير المظهر">
+                ☾
+            </button>
 
-            <button
-                class="menu-btn"
-                id="menuBtn"
-                type="button"
-                aria-label="القائمة">
-
+            <button class="menu-btn" id="menuBtn" aria-label="القائمة">
                 ☰
-
             </button>
-
 
         </div>
-
 
     </div>
 
 </header>
 
 
+<!-- SEARCH -->
 
-<!-- =====================================================
-     SEARCH PANEL
-===================================================== -->
-
-<div
-    class="search-panel"
-    id="searchPanel">
-
+<div class="search-panel" id="searchPanel">
 
     <div class="search-container">
 
-
         <input
-            type="search"
+            type="text"
             id="searchInput"
             placeholder="ابحث عن مانجا أو مانهوا..."
-            autocomplete="off">
+            autocomplete="off"
+        >
 
-
-        <button
-            id="clearSearch"
-            type="button"
-            aria-label="مسح البحث">
-
+        <button id="clearSearch">
             ×
-
         </button>
 
-
     </div>
-
 
 </div>
 
 
-
-<!-- =====================================================
-     MAIN
-===================================================== -->
-
 <main>
 
+    <!-- HERO -->
 
+    <section class="hero" id="home">
 
-<!-- =====================================================
-     HERO
-===================================================== -->
+        <div class="hero-background"></div>
 
-<section
-    class="hero"
-    id="home">
+        <div class="hero-overlay"></div>
 
+        <div class="hero-content">
 
-    <!-- الخلفية يتم تغييرها من script.js -->
+            <span class="hero-badge">
+                🔥 الأكثر شعبية
+            </span>
 
-    <div
-        class="hero-background"
-        id="heroBackground">
-    </div>
+            <h1 id="heroTitle">
+                MangaX
+            </h1>
 
+            <p id="heroDescription">
+                اقرأ أحدث المانجا والمانهوا بسهولة.
+            </p>
 
+            <div class="hero-info">
 
-    <div
-        class="hero-content"
-        id="heroContent">
+                <span id="heroRating">
+                    ⭐ —
+                </span>
 
+                <span id="heroChapter">
+                    📚 —
+                </span>
 
-        <!-- BADGE -->
+                <span id="heroType">
+                    📖 —
+                </span>
 
-        <div class="hero-badge">
+            </div>
 
-            🔥 الأكثر شعبية هذا الأسبوع
+            <div class="hero-buttons">
+
+                <a
+                    href="#latest"
+                    class="btn primary">
+                    ابدأ القراءة
+                </a>
+
+                <a
+                    href="#latest"
+                    class="btn secondary">
+                    استكشف الأعمال
+                </a>
+
+            </div>
 
         </div>
 
+    </section>
 
 
-        <!-- TITLE -->
+    <!-- LATEST -->
 
-        <h1 id="heroTitle">
+    <section class="section" id="latest">
 
-            جاري التحميل...
+        <div class="section-heading">
 
-        </h1>
+            <div>
 
+                <span class="small-title">
+                    تحديثات جديدة
+                </span>
 
+                <h2>
+                    أحدث الأعمال
+                </h2>
 
-        <!-- DESCRIPTION -->
+            </div>
 
-        <p id="heroDescription">
+            <span class="manga-count" id="mangaCount">
+                جاري التحميل...
+            </span>
 
-            جاري تحميل معلومات العمل...
+        </div>
 
-        </p>
-
-
-
-        <!-- INFORMATION -->
 
         <div
-            class="hero-info"
-            id="heroInfo">
-
-
-            <span>
-
-                ⭐ -
-
-            </span>
-
-
-            <span>
-
-                📚 -
-
-            </span>
-
-
-            <span>
-
-                📖 -
-
-            </span>
-
-
+            class="manga-grid"
+            id="mangaGrid">
         </div>
 
 
+        <div
+            class="no-results"
+            id="noResults"
+            hidden>
 
-        <!-- BUTTONS -->
-
-        <div class="hero-buttons">
-
-
-            <a
-                href="#"
-                id="heroReadButton"
-                class="btn primary">
-
-                ▶ ابدأ القراءة
-
-            </a>
-
-
-            <a
-                href="#latest"
-                class="btn secondary">
-
-                استكشف المزيد
-
-            </a>
-
-
-        </div>
-
-
-    </div>
-
-
-</section>
-
-
-
-<!-- =====================================================
-     LATEST SECTION
-===================================================== -->
-
-<section
-    class="section"
-    id="latest">
-
-
-    <!-- SECTION HEADING -->
-
-    <div class="section-heading">
-
-
-        <div>
-
-            <span class="small-title">
-
-                تحديثات جديدة
-
-            </span>
-
-
-            <h2>
-
-                أحدث الأعمال
-
-            </h2>
-
-        </div>
-
-
-        <span
-            class="manga-count"
-            id="mangaCount">
-
-            جاري التحميل...
-
-        </span>
-
-
-    </div>
-
-
-
-    <!-- =================================================
-         MANGA
-    ================================================== -->
-
-    <div class="content-title">
-
-
-        <div>
-
-            <span class="small-title">
-
-                Japanese Comics
-
-            </span>
-
+            <div class="no-results-icon">
+                🔍
+            </div>
 
             <h3>
-
-                Manga
-
+                لم نجد أي نتائج
             </h3>
 
-        </div>
-
-
-    </div>
-
-
-
-    <!-- الأعمال يتم وضعها هنا بواسطة script.js -->
-
-    <div
-        class="manga-grid"
-        id="mangaGrid">
-
-
-        <div class="loading">
-
-            جاري تحميل المانجا...
+            <p>
+                جرّب البحث باسم عمل آخر.
+            </p>
 
         </div>
 
-
-    </div>
-
+    </section>
 
 
-    <!-- =================================================
-         MANHWA
-    ================================================== -->
+    <!-- POPULAR -->
 
-    <div
-        class="content-title manhwa-title">
+    <section class="section" id="popular">
 
+        <div class="section-heading">
 
-        <div>
+            <div>
 
-            <span class="small-title">
+                <span class="small-title">
+                    الأكثر مشاهدة
+                </span>
 
-                Korean Comics
+                <h2>
+                    الأكثر قراءة
+                </h2>
 
-            </span>
-
-
-            <h3>
-
-                Manhwa
-
-            </h3>
+            </div>
 
         </div>
 
 
-    </div>
+        <div
+            class="popular-list"
+            id="popularList">
 
-
-
-    <!-- الأعمال يتم وضعها هنا بواسطة script.js -->
-
-    <div
-        class="manga-grid"
-        id="manhwaGrid">
-
-
-        <div class="loading">
-
-            جاري تحميل المانهوا...
+            <div class="loading">
+                جاري التحميل...
+            </div>
 
         </div>
 
-
-    </div>
-
-
-
-    <!-- =================================================
-         NO RESULTS
-    ================================================== -->
-
-    <div
-        class="no-results"
-        id="noResults"
-        style="display: none;">
-
-
-        <div class="no-results-icon">
-
-            🔍
-
-        </div>
-
-
-        <h3>
-
-            لم نجد أي نتائج
-
-        </h3>
-
-
-        <p>
-
-            جرّب البحث باسم مانجا أو مانهوا آخر.
-
-        </p>
-
-
-    </div>
-
-
-</section>
-
-
-
-<!-- =====================================================
-     POPULAR SECTION
-===================================================== -->
-
-<section
-    class="section"
-    id="popular">
-
-
-    <!-- SECTION HEADING -->
-
-    <div class="section-heading">
-
-
-        <div>
-
-            <span class="small-title">
-
-                الأكثر مشاهدة
-
-            </span>
-
-
-            <h2>
-
-                الأكثر قراءة
-
-            </h2>
-
-        </div>
-
-
-    </div>
-
-
-
-    <!-- =================================================
-         POPULAR LIST
-    ================================================== -->
-
-    <div
-        class="popular-list"
-        id="popularList">
-
-
-        <!-- يتم إنشاء القائمة بواسطة script.js -->
-
-        <div class="loading">
-
-            جاري تحميل الأعمال...
-
-        </div>
-
-
-    </div>
-
-
-</section>
-
-
+    </section>
 
 </main>
 
 
-
-<!-- =====================================================
-     FOOTER
-===================================================== -->
-
 <footer>
-
 
     <div class="footer-inner">
 
-
-        <!-- FOOTER BRAND -->
-
-        <div class="footer-brand">
-
+        <div>
 
             <div class="logo">
-
                 Manga<span>X</span>
-
             </div>
 
-
             <p>
-
                 منصتك لقراءة المانجا والمانهوا.
-
             </p>
-
 
         </div>
 
-
-
-        <!-- FOOTER LINKS -->
 
         <div class="footer-links">
 
-
             <a href="#home">
-
                 الرئيسية
-
             </a>
-
 
             <a href="#latest">
-
-                الأحدث
-
+                أحدث الأعمال
             </a>
-
 
             <a href="#popular">
-
                 الأكثر قراءة
-
             </a>
-
-
-            <a href="#">
-
-                الخصوصية
-
-            </a>
-
-
-            <a href="#">
-
-                تواصل معنا
-
-            </a>
-
 
         </div>
 
-
     </div>
 
-
-
-    <!-- COPYRIGHT -->
 
     <div class="copyright">
 
@@ -615,18 +263,10 @@
 
     </div>
 
-
 </footer>
 
 
-
-<!-- =====================================================
-     JAVASCRIPT
-===================================================== -->
-
 <script src="script.js"></script>
 
-
 </body>
-
 </html>
