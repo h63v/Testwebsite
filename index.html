@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,24 +25,39 @@
 
       <nav class="navigation">
 
-        <a href="#home" class="active">الرئيسية</a>
-        <a href="#latest">الأحدث</a>
-        <a href="#popular">الأكثر قراءة</a>
-        <a href="#categories">التصنيفات</a>
+        <a href="#home" class="active">
+          الرئيسية
+        </a>
+
+        <a href="#latest">
+          الأحدث
+        </a>
+
+        <a href="#popular">
+          الأكثر قراءة
+        </a>
 
       </nav>
 
       <div class="header-actions">
 
-        <button class="icon-btn" id="themeBtn" title="تغيير المظهر">
+        <button
+          class="icon-btn"
+          id="themeBtn"
+          title="تغيير المظهر">
           ☾
         </button>
 
-        <button class="icon-btn search-toggle" id="searchToggle">
+        <button
+          class="icon-btn"
+          id="searchToggle"
+          title="البحث">
           ⌕
         </button>
 
-        <button class="menu-btn" id="menuBtn">
+        <button
+          class="menu-btn"
+          id="menuBtn">
           ☰
         </button>
 
@@ -54,7 +70,9 @@
 
   <!-- ================= SEARCH ================= -->
 
-  <div class="search-panel" id="searchPanel">
+  <div
+    class="search-panel"
+    id="searchPanel">
 
     <div class="search-container">
 
@@ -62,9 +80,12 @@
         type="text"
         id="searchInput"
         placeholder="ابحث عن مانجا أو مانهوا..."
+        autocomplete="off"
       >
 
-      <button id="clearSearch">×</button>
+      <button id="clearSearch">
+        ×
+      </button>
 
     </div>
 
@@ -75,7 +96,9 @@
 
   <main>
 
-    <section class="hero" id="home">
+    <section
+      class="hero"
+      id="home">
 
       <div class="hero-background"></div>
 
@@ -97,79 +120,35 @@
 
         <div class="hero-info">
 
-          <span>⭐ 9.8</span>
-          <span>📚 210 فصل</span>
-          <span>🎭 أكشن</span>
+          <span>
+            ⭐ 9.8
+          </span>
+
+          <span>
+            📚 210 فصل
+          </span>
+
+          <span>
+            ⚔️ أكشن
+          </span>
 
         </div>
 
         <div class="hero-buttons">
 
-          <a href="reader.html" class="btn primary">
+          <a
+            href="reader.html"
+            class="btn primary">
             ▶ ابدأ القراءة
           </a>
 
-          <a href="#details" class="btn secondary">
-            التفاصيل
+          <a
+            href="#latest"
+            class="btn secondary">
+            استكشف المزيد
           </a>
 
         </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- ================= CATEGORIES ================= -->
-
-    <section class="section" id="categories">
-
-      <div class="section-heading">
-
-        <div>
-          <span class="small-title">اكتشف</span>
-          <h2>التصنيفات</h2>
-        </div>
-
-      </div>
-
-      <div class="category-grid">
-
-        <a href="#" class="category-card">
-          <span>⚔️</span>
-          <strong>أكشن</strong>
-          <small>124 مانجا</small>
-        </a>
-
-        <a href="#" class="category-card">
-          <span>✨</span>
-          <strong>فانتازيا</strong>
-          <small>98 مانجا</small>
-        </a>
-
-        <a href="#" class="category-card">
-          <span>❤️</span>
-          <strong>رومانسي</strong>
-          <small>76 مانجا</small>
-        </a>
-
-        <a href="#" class="category-card">
-          <span>😂</span>
-          <strong>كوميدي</strong>
-          <small>64 مانجا</small>
-        </a>
-
-        <a href="#" class="category-card">
-          <span>👻</span>
-          <strong>رعب</strong>
-          <small>41 مانجا</small>
-        </a>
-
-        <a href="#" class="category-card">
-          <span>🏆</span>
-          <strong>رياضة</strong>
-          <small>35 مانجا</small>
-        </a>
 
       </div>
 
@@ -178,64 +157,104 @@
 
     <!-- ================= LATEST ================= -->
 
-    <section class="section" id="latest">
+    <section
+      class="section"
+      id="latest">
 
       <div class="section-heading">
 
         <div>
-          <span class="small-title">تحديثات جديدة</span>
-          <h2>أحدث المانجا</h2>
+
+          <span class="small-title">
+            تحديثات جديدة
+          </span>
+
+          <h2>
+            أحدث المانجا
+          </h2>
+
         </div>
 
-        <a href="#" class="view-all">
-          عرض الكل →
-        </a>
+        <span
+          class="manga-count"
+          id="mangaCount">
+          6 مانجا
+        </span>
 
       </div>
 
 
-      <div class="manga-grid" id="mangaGrid">
+      <!-- ================= MANGA GRID ================= -->
 
-        <!-- Manga 1 -->
+      <div
+        class="manga-grid"
+        id="mangaGrid">
+
+
+        <!-- ================= MANGA 1 ================= -->
 
         <article
           class="manga-card"
-          data-title="Solo Leveling"
-          data-category="action"
-        >
+          data-title="Solo Leveling">
 
           <div class="cover-container">
 
             <img
               src="https://picsum.photos/500/750?random=21"
               alt="Solo Leveling"
+              loading="lazy"
             >
 
             <span class="status ongoing">
               مستمرة
             </span>
 
-            <button class="favorite">
+            <button
+              class="favorite"
+              aria-label="إضافة للمفضلة">
               ♡
             </button>
 
           </div>
 
+
           <div class="manga-content">
 
-            <h3>Solo Leveling</h3>
+            <h3>
+              Solo Leveling
+            </h3>
 
             <div class="rating">
               ⭐ 9.8
             </div>
 
-            <div class="chapters">
+            <div class="chapter-row">
 
-              <a href="reader.html">
+              <span>
                 الفصل 210
+              </span>
+
+              <span>
+                منذ ساعتين
+              </span>
+
+            </div>
+
+
+            <div class="card-buttons">
+
+              <a
+                href="reader.html"
+                class="read-btn">
+                ▶ قراءة
               </a>
 
-              <span>منذ ساعتين</span>
+              <a
+                href="files/solo-leveling-210.zip"
+                class="download-btn"
+                download>
+                ↓ تنزيل
+              </a>
 
             </div>
 
@@ -244,46 +263,70 @@
         </article>
 
 
-        <!-- Manga 2 -->
+        <!-- ================= MANGA 2 ================= -->
 
         <article
           class="manga-card"
-          data-title="One Piece"
-          data-category="action"
-        >
+          data-title="One Piece">
 
           <div class="cover-container">
 
             <img
               src="https://picsum.photos/500/750?random=22"
               alt="One Piece"
+              loading="lazy"
             >
 
             <span class="status ongoing">
               مستمرة
             </span>
 
-            <button class="favorite">
+            <button
+              class="favorite"
+              aria-label="إضافة للمفضلة">
               ♡
             </button>
 
           </div>
 
+
           <div class="manga-content">
 
-            <h3>One Piece</h3>
+            <h3>
+              One Piece
+            </h3>
 
             <div class="rating">
               ⭐ 9.7
             </div>
 
-            <div class="chapters">
+            <div class="chapter-row">
 
-              <a href="reader.html">
+              <span>
                 الفصل 1180
+              </span>
+
+              <span>
+                منذ 5 ساعات
+              </span>
+
+            </div>
+
+
+            <div class="card-buttons">
+
+              <a
+                href="reader.html"
+                class="read-btn">
+                ▶ قراءة
               </a>
 
-              <span>منذ 5 ساعات</span>
+              <a
+                href="files/one-piece-1180.zip"
+                class="download-btn"
+                download>
+                ↓ تنزيل
+              </a>
 
             </div>
 
@@ -292,46 +335,70 @@
         </article>
 
 
-        <!-- Manga 3 -->
+        <!-- ================= MANGA 3 ================= -->
 
         <article
           class="manga-card"
-          data-title="Blue Lock"
-          data-category="sports"
-        >
+          data-title="Blue Lock">
 
           <div class="cover-container">
 
             <img
               src="https://picsum.photos/500/750?random=23"
               alt="Blue Lock"
+              loading="lazy"
             >
 
             <span class="status ongoing">
               مستمرة
             </span>
 
-            <button class="favorite">
+            <button
+              class="favorite"
+              aria-label="إضافة للمفضلة">
               ♡
             </button>
 
           </div>
 
+
           <div class="manga-content">
 
-            <h3>Blue Lock</h3>
+            <h3>
+              Blue Lock
+            </h3>
 
             <div class="rating">
               ⭐ 9.4
             </div>
 
-            <div class="chapters">
+            <div class="chapter-row">
 
-              <a href="reader.html">
+              <span>
                 الفصل 320
+              </span>
+
+              <span>
+                منذ 8 ساعات
+              </span>
+
+            </div>
+
+
+            <div class="card-buttons">
+
+              <a
+                href="reader.html"
+                class="read-btn">
+                ▶ قراءة
               </a>
 
-              <span>منذ 8 ساعات</span>
+              <a
+                href="files/blue-lock-320.zip"
+                class="download-btn"
+                download>
+                ↓ تنزيل
+              </a>
 
             </div>
 
@@ -340,46 +407,70 @@
         </article>
 
 
-        <!-- Manga 4 -->
+        <!-- ================= MANGA 4 ================= -->
 
         <article
           class="manga-card"
-          data-title="Demon Slayer"
-          data-category="action"
-        >
+          data-title="Demon Slayer">
 
           <div class="cover-container">
 
             <img
               src="https://picsum.photos/500/750?random=24"
               alt="Demon Slayer"
+              loading="lazy"
             >
 
             <span class="status completed">
               مكتملة
             </span>
 
-            <button class="favorite">
+            <button
+              class="favorite"
+              aria-label="إضافة للمفضلة">
               ♡
             </button>
 
           </div>
 
+
           <div class="manga-content">
 
-            <h3>Demon Slayer</h3>
+            <h3>
+              Demon Slayer
+            </h3>
 
             <div class="rating">
               ⭐ 9.6
             </div>
 
-            <div class="chapters">
+            <div class="chapter-row">
 
-              <a href="reader.html">
+              <span>
                 الفصل 205
+              </span>
+
+              <span>
+                أمس
+              </span>
+
+            </div>
+
+
+            <div class="card-buttons">
+
+              <a
+                href="reader.html"
+                class="read-btn">
+                ▶ قراءة
               </a>
 
-              <span>أمس</span>
+              <a
+                href="files/demon-slayer-205.zip"
+                class="download-btn"
+                download>
+                ↓ تنزيل
+              </a>
 
             </div>
 
@@ -388,46 +479,70 @@
         </article>
 
 
-        <!-- Manga 5 -->
+        <!-- ================= MANGA 5 ================= -->
 
         <article
           class="manga-card"
-          data-title="Jujutsu Kaisen"
-          data-category="action"
-        >
+          data-title="Jujutsu Kaisen">
 
           <div class="cover-container">
 
             <img
               src="https://picsum.photos/500/750?random=25"
               alt="Jujutsu Kaisen"
+              loading="lazy"
             >
 
             <span class="status completed">
               مكتملة
             </span>
 
-            <button class="favorite">
+            <button
+              class="favorite"
+              aria-label="إضافة للمفضلة">
               ♡
             </button>
 
           </div>
 
+
           <div class="manga-content">
 
-            <h3>Jujutsu Kaisen</h3>
+            <h3>
+              Jujutsu Kaisen
+            </h3>
 
             <div class="rating">
               ⭐ 9.5
             </div>
 
-            <div class="chapters">
+            <div class="chapter-row">
 
-              <a href="reader.html">
+              <span>
                 الفصل 271
+              </span>
+
+              <span>
+                أمس
+              </span>
+
+            </div>
+
+
+            <div class="card-buttons">
+
+              <a
+                href="reader.html"
+                class="read-btn">
+                ▶ قراءة
               </a>
 
-              <span>أمس</span>
+              <a
+                href="files/jujutsu-kaisen-271.zip"
+                class="download-btn"
+                download>
+                ↓ تنزيل
+              </a>
 
             </div>
 
@@ -436,52 +551,241 @@
         </article>
 
 
-        <!-- Manga 6 -->
+        <!-- ================= MANGA 6 ================= -->
 
         <article
           class="manga-card"
-          data-title="Spy x Family"
-          data-category="comedy"
-        >
+          data-title="Spy x Family">
 
           <div class="cover-container">
 
             <img
               src="https://picsum.photos/500/750?random=26"
               alt="Spy x Family"
+              loading="lazy"
             >
 
             <span class="status ongoing">
               مستمرة
             </span>
 
-            <button class="favorite">
+            <button
+              class="favorite"
+              aria-label="إضافة للمفضلة">
               ♡
             </button>
 
           </div>
 
+
           <div class="manga-content">
 
-            <h3>Spy x Family</h3>
+            <h3>
+              Spy x Family
+            </h3>
 
             <div class="rating">
               ⭐ 9.1
             </div>
 
-            <div class="chapters">
+            <div class="chapter-row">
 
-              <a href="reader.html">
+              <span>
                 الفصل 145
+              </span>
+
+              <span>
+                منذ يومين
+              </span>
+
+            </div>
+
+
+            <div class="card-buttons">
+
+              <a
+                href="reader.html"
+                class="read-btn">
+                ▶ قراءة
               </a>
 
-              <span>منذ يومين</span>
+              <a
+                href="files/spy-x-family-145.zip"
+                class="download-btn"
+                download>
+                ↓ تنزيل
+              </a>
 
             </div>
 
           </div>
 
         </article>
+
+
+        <!-- ================= MANGA 7 ================= -->
+
+        <article
+          class="manga-card"
+          data-title="Chainsaw Man">
+
+          <div class="cover-container">
+
+            <img
+              src="https://picsum.photos/500/750?random=27"
+              alt="Chainsaw Man"
+              loading="lazy"
+            >
+
+            <span class="status ongoing">
+              مستمرة
+            </span>
+
+            <button
+              class="favorite"
+              aria-label="إضافة للمفضلة">
+              ♡
+            </button>
+
+          </div>
+
+
+          <div class="manga-content">
+
+            <h3>
+              Chainsaw Man
+            </h3>
+
+            <div class="rating">
+              ⭐ 9.3
+            </div>
+
+            <div class="chapter-row">
+
+              <span>
+                الفصل 210
+              </span>
+
+              <span>
+                منذ 3 أيام
+              </span>
+
+            </div>
+
+
+            <div class="card-buttons">
+
+              <a
+                href="reader.html"
+                class="read-btn">
+                ▶ قراءة
+              </a>
+
+              <a
+                href="files/chainsaw-man-210.zip"
+                class="download-btn"
+                download>
+                ↓ تنزيل
+              </a>
+
+            </div>
+
+          </div>
+
+        </article>
+
+
+        <!-- ================= MANGA 8 ================= -->
+
+        <article
+          class="manga-card"
+          data-title="Attack on Titan">
+
+          <div class="cover-container">
+
+            <img
+              src="https://picsum.photos/500/750?random=28"
+              alt="Attack on Titan"
+              loading="lazy"
+            >
+
+            <span class="status completed">
+              مكتملة
+            </span>
+
+            <button
+              class="favorite"
+              aria-label="إضافة للمفضلة">
+              ♡
+            </button>
+
+          </div>
+
+
+          <div class="manga-content">
+
+            <h3>
+              Attack on Titan
+            </h3>
+
+            <div class="rating">
+              ⭐ 9.7
+            </div>
+
+            <div class="chapter-row">
+
+              <span>
+                الفصل 139
+              </span>
+
+              <span>
+                منذ 4 أيام
+              </span>
+
+            </div>
+
+
+            <div class="card-buttons">
+
+              <a
+                href="reader.html"
+                class="read-btn">
+                ▶ قراءة
+              </a>
+
+              <a
+                href="files/attack-on-titan-139.zip"
+                class="download-btn"
+                download>
+                ↓ تنزيل
+              </a>
+
+            </div>
+
+          </div>
+
+        </article>
+
+      </div>
+
+
+      <!-- No results -->
+
+      <div
+        class="no-results"
+        id="noResults">
+
+        <div>
+          🔍
+        </div>
+
+        <h3>
+          لم نجد أي نتائج
+        </h3>
+
+        <p>
+          جرّب البحث باسم مانجا آخر.
+        </p>
 
       </div>
 
@@ -490,13 +794,22 @@
 
     <!-- ================= POPULAR ================= -->
 
-    <section class="section" id="popular">
+    <section
+      class="section"
+      id="popular">
 
       <div class="section-heading">
 
         <div>
-          <span class="small-title">الأكثر مشاهدة</span>
-          <h2>الأكثر قراءة</h2>
+
+          <span class="small-title">
+            الأكثر مشاهدة
+          </span>
+
+          <h2>
+            الأكثر قراءة
+          </h2>
+
         </div>
 
       </div>
@@ -504,19 +817,32 @@
 
       <div class="popular-list">
 
+
         <div class="popular-item">
 
-          <span class="rank">01</span>
+          <span class="rank">
+            01
+          </span>
 
-          <img src="https://picsum.photos/150/220?random=31">
+          <img
+            src="https://picsum.photos/150/220?random=31"
+            alt="Solo Leveling"
+            loading="lazy"
+          >
 
           <div>
 
-            <h3>Solo Leveling</h3>
+            <h3>
+              Solo Leveling
+            </h3>
 
-            <p>أكشن • فانتازيا</p>
+            <p>
+              أكشن • فانتازيا
+            </p>
 
-            <strong>⭐ 9.8</strong>
+            <strong>
+              ⭐ 9.8
+            </strong>
 
           </div>
 
@@ -525,17 +851,29 @@
 
         <div class="popular-item">
 
-          <span class="rank">02</span>
+          <span class="rank">
+            02
+          </span>
 
-          <img src="https://picsum.photos/150/220?random=32">
+          <img
+            src="https://picsum.photos/150/220?random=32"
+            alt="One Piece"
+            loading="lazy"
+          >
 
           <div>
 
-            <h3>One Piece</h3>
+            <h3>
+              One Piece
+            </h3>
 
-            <p>أكشن • مغامرات</p>
+            <p>
+              أكشن • مغامرات
+            </p>
 
-            <strong>⭐ 9.7</strong>
+            <strong>
+              ⭐ 9.7
+            </strong>
 
           </div>
 
@@ -544,17 +882,29 @@
 
         <div class="popular-item">
 
-          <span class="rank">03</span>
+          <span class="rank">
+            03
+          </span>
 
-          <img src="https://picsum.photos/150/220?random=33">
+          <img
+            src="https://picsum.photos/150/220?random=33"
+            alt="Jujutsu Kaisen"
+            loading="lazy"
+          >
 
           <div>
 
-            <h3>Jujutsu Kaisen</h3>
+            <h3>
+              Jujutsu Kaisen
+            </h3>
 
-            <p>أكشن • خارق للطبيعة</p>
+            <p>
+              أكشن • خارق للطبيعة
+            </p>
 
-            <strong>⭐ 9.5</strong>
+            <strong>
+              ⭐ 9.5
+            </strong>
 
           </div>
 
@@ -563,21 +913,34 @@
 
         <div class="popular-item">
 
-          <span class="rank">04</span>
+          <span class="rank">
+            04
+          </span>
 
-          <img src="https://picsum.photos/150/220?random=34">
+          <img
+            src="https://picsum.photos/150/220?random=34"
+            alt="Demon Slayer"
+            loading="lazy"
+          >
 
           <div>
 
-            <h3>Demon Slayer</h3>
+            <h3>
+              Demon Slayer
+            </h3>
 
-            <p>أكشن • تاريخي</p>
+            <p>
+              أكشن • تاريخي
+            </p>
 
-            <strong>⭐ 9.6</strong>
+            <strong>
+              ⭐ 9.6
+            </strong>
 
           </div>
 
         </div>
+
 
       </div>
 
@@ -599,24 +962,43 @@
         </div>
 
         <p>
-          منصتك المفضلة لقراءة المانجا والمانهوا.
+          منصتك لقراءة المانجا والمانهوا.
         </p>
 
       </div>
 
+
       <div class="footer-links">
 
-        <a href="#">الرئيسية</a>
-        <a href="#">التصنيفات</a>
-        <a href="#">الخصوصية</a>
-        <a href="#">تواصل معنا</a>
+        <a href="#home">
+          الرئيسية
+        </a>
+
+        <a href="#latest">
+          الأحدث
+        </a>
+
+        <a href="#popular">
+          الأكثر قراءة
+        </a>
+
+        <a href="#">
+          الخصوصية
+        </a>
+
+        <a href="#">
+          تواصل معنا
+        </a>
 
       </div>
 
     </div>
 
+
     <div class="copyright">
+
       © 2026 MangaX — جميع الحقوق محفوظة
+
     </div>
 
   </footer>
@@ -625,4 +1007,5 @@
   <script src="app.js"></script>
 
 </body>
+
 </html>
