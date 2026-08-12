@@ -1,0 +1,33 @@
+[
+    {
+        "name": "Solo Leveling",
+        "slug": "solo-leveling",
+        "page": "solo-leveling.html",
+        "cover": "https://example.com/solo-leveling.jpg",
+        "type": "Manga",
+        "genres": [
+            "أكشن",
+            "فانتازيا"
+        ],
+        "status": "مستمرة",
+        "rating": 9.8,
+        "latestChapter": 2,
+        "latestChapterUrl": "solo-leveling-chapter-2.html"
+    },
+
+    {
+        "name": "One Piece",
+        "slug": "one-piece",
+        "page": "one-piece.html",
+        "cover": "https://example.com/one-piece.jpg",
+        "type": "Manga",
+        "genres": [
+            "أكشن",
+            "مغامرات"
+        ],
+        "status": "مستمرة",
+        "rating": 9.7,
+        "latestChapter": 1180,
+        "latestChapterUrl": "one-piece-chapter-1180.html"
+    }
+] 
