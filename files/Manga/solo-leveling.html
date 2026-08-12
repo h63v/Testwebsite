@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Solo Leveling</title>
+
+    <style>
+        body {
+            margin: 0;
+            background: #08080d;
+            color: white;
+            font-family: Arial, Tahoma, sans-serif;
+        }
+
+        .container {
+            width: min(900px, calc(100% - 30px));
+            margin: auto;
+            padding: 40px 0;
+        }
+
+        .work {
+            display: flex;
+            gap: 25px;
+            background: #111119;
+            border: 1px solid #252530;
+            border-radius: 18px;
+            padding: 20px;
+        }
+
+        .cover {
+            width: 220px;
+            height: 330px;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+
+        .info {
+            flex: 1;
+        }
+
+        h1 {
+            font-size: 36px;
+            margin-top: 0;
+        }
+
+        .genres {
+            color: #a78bfa;
+            margin: 15px 0;
+        }
+
+        .chapters {
+            margin-top: 30px;
+        }
+
+        .chapter {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px;
+            margin-bottom: 8px;
+            background: #181820;
+            border-radius: 10px;
+        }
+
+        .chapter a {
+            background: #8b5cf6;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 8px;
+            text-decoration: none;
+        }
+
+        @media(max-width:600px) {
+
+            .work {
+                flex-direction: column;
+            }
+
+            .cover {
+                width: 100%;
+                height: auto;
+                max-height: 500px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            .chapter {
+                gap: 10px;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="work">
+
+        <img
+            class="cover"
+            src="https://picsum.photos/500/750?random=101"
+            alt="Solo Leveling"
+        >
+
+        <div class="info">
+
+            <h1>
+                Solo Leveling
+            </h1>
+
+            <p>
+                مغامرات سونغ جين وو في عالم الصيادين.
+            </p>
+
+            <div class="genres">
+                أكشن • فانتازيا • مغامرات
+            </div>
+
+            <p>
+                ⭐ 9.8
+            </p>
+
+            <p>
+                الحالة: مستمرة
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="chapters">
+
+        <h2>
+            الفصول
+        </h2>
+
+
+        <div class="chapter">
+
+            <span>
+                الفصل 1
+            </span>
+
+            <a href="../../reader.html?chapter=files/Manga/solo-leveling-chapter-1.html">
+                قراءة
+            </a>
+
+        </div>
+
+
+        <div class="chapter">
+
+            <span>
+                الفصل 1
+            </span>
+
+            <a href="../../reader.html?chapter=files/Manga/solo-leveling-chapter-1.html">
+                قراءة
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
