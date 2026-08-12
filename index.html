@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عالم المانجا | Manga World</title>
+    <!-- ملف التنسيق الخارجي -->
+    <link rel="stylesheet" href="style.css">
+    <!-- مكتبة الأيقونات FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- الهيدر / شريط التنقل -->
+    <header class="navbar">
+        <div class="logo">
+            <i class="fa-solid fa-book-open-reader"></i>
+            <span>Manga<span>Hub</span></span>
+        </div>
+        <nav class="nav-links">
+            <a href="#" class="active"><i class="fa-solid fa-house"></i> الرئيسية</a>
+            <a href="#"><i class="fa-solid fa-fire"></i> الأفضل</a>
+            <a href="#"><i class="fa-solid fa-list"></i> القائمة</a>
+            <a href="#"><i class="fa-solid fa-bookmark"></i> المفضلة</a>
+        </nav>
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="ابحث عن مانجا، مانهوا...">
+            <button id="searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+    </header>
+
+    <!-- قسم المانجا المميزة (Hero Section) -->
+    <section class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <span class="badge">🔥 الأكثر مشاهدة اليوم</span>
+            <h1>Solo Leveling: Ragnarok</h1>
+            <p class="genres"><span>أكشن</span> <span>فانتازيا</span> <span>مغامرة</span></p>
+            <p class="description">
+                بعد مواجهة المخاطر العظمى، يعود السحر والقتال في عالم مليء بالمخاطر والوحوش المظلمة. تابع الرحلة الأسطورية للسيطرة على القوة المطلقة!
+            </p>
+            <div class="hero-buttons">
+                <a href="#" class="btn btn-primary"><i class="fa-solid fa-play"></i> ابدأ القراءة</a>
+                <button class="btn btn-secondary bookmark-btn"><i class="fa-solid fa-plus"></i> أضف للمفضلة</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم شبكة المانجا (Latest Releases) -->
+    <main class="container">
+        <div class="section-header">
+            <h2><i class="fa-solid fa-bolt"></i> أحدث الفصول المضافة</h2>
+            <a href="#" class="view-all">عرض الكل <i class="fa-solid fa-arrow-left"></i></a>
+        </div>
+
+        <div class="manga-grid">
+            <!-- كارت مانجا 1 -->
+            <div class="manga-card">
+                <div class="card-image">
+                    <img src="https://picsum.photos/300/420?random=1" alt="Manga Cover">
+                    <span class="rating"><i class="fa-solid fa-star"></i> 9.8</span>
+                    <span class="type-tag">مانهوا</span>
+                </div>
+                <div class="card-info">
+                    <h3>اسم المانجا الأسطورية</h3>
+                    <div class="chapters-list">
+                        <a href="#">الفصل 142 <span class="time">منذ 10 د</span></a>
+                        <a href="#">الفصل 141 <span class="time">منذ يوم</span></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- كارت مانجا 2 -->
+            <div class="manga-card">
+                <div class="card-image">
+                    <img src="https://picsum.photos/300/420?random=2" alt="Manga Cover">
+                    <span class="rating"><i class="fa-solid fa-star"></i> 9.5</span>
+                    <span class="type-tag">مانجا</span>
+                </div>
+                <div class="card-info">
+                    <h3>مغامرات الفارس المظلم</h3>
+                    <div class="chapters-list">
+                        <a href="#">الفصل 85 <span class="time">منذ ساعتين</span></a>
+                        <a href="#">الفصل 84 <span class="time">منذ 3 أيام</span></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- كارت مانجا 3 -->
+            <div class="manga-card">
+                <div class="card-image">
+                    <img src="https://picsum.photos/300/420?random=3" alt="Manga Cover">
+                    <span class="rating"><i class="fa-solid fa-star"></i> 8.9</span>
+                    <span class="type-tag">مانها</span>
+                </div>
+                <div class="card-info">
+                    <h3>سيد الإمبراطورية</h3>
+                    <div class="chapters-list">
+                        <a href="#">الفصل 210 <span class="time">منذ 5 ساعات</span></a>
+                        <a href="#">الفصل 209 <span class="time">منذ يومين</span></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- كارت مانجا 4 -->
+            <div class="manga-card">
+                <div class="card-image">
+                    <img src="https://picsum.photos/300/420?random=4" alt="Manga Cover">
+                    <span class="rating"><i class="fa-solid fa-star"></i> 9.2</span>
+                    <span class="type-tag">مانهوا</span>
+                </div>
+                <div class="card-info">
+                    <h3>عودة الملك الساحر</h3>
+                    <div class="chapters-list">
+                        <a href="#">الفصل 50 <span class="time">منذ يوم</span></a>
+                        <a href="#">الفصل 49 <span class="time">منذ أسبوع</span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- الفوتر -->
+    <footer>
+        <p>جميع الحقوق محفوظة &copy; 2026 | تم التصميم لشبكة MangaHub</p>
+    </footer>
+
+    <!-- ملف السكريبت الخارجي -->
+    <script src="script.js"></script>
+</body>
+              </html>
