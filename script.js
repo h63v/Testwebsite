@@ -1,7 +1,7 @@
 "use strict";
 
 /* =========================================================
-   CONFIG
+   DATA SOURCES
 ========================================================= */
 
 const SOURCES = [
@@ -20,37 +20,137 @@ const SOURCES = [
    ELEMENTS
 ========================================================= */
 
-const mangaGrid =
-    document.getElementById("mangaGrid");
+const mangaGrid = document.getElementById("mangaGrid");
+const mangaCount = document.getElementById("mangaCount");
+const popularList = document.getElementById("popularList");
+const noResults = document.getElementById("noResults");
 
-const mangaCount =
-    document.getElementById("mangaCount");
+const searchToggle = document.getElementById("searchToggle");
+const searchPanel = document.getElementById("searchPanel");
+const searchInput = document.getElementById("searchInput");
+const clearSearch = document.getElementById("clearSearch");
 
-const popularList =
-    document.getElementById("popularList");
-
-const noResults =
-    document.getElementById("noResults");
-
-const searchToggle =
-    document.getElementById("searchToggle");
-
-const searchPanel =
-    document.getElementById("searchPanel");
-
-const searchInput =
-    document.getElementById("searchInput");
-
-const clearSearch =
-    document.getElementById("clearSearch");
-
-const themeBtn =
-    document.getElementById("themeBtn");
-
-const menuBtn =
-    document.getElementById("menuBtn");
+const themeBtn = document.getElementById("themeBtn");
+const menuBtn = document.getElementById("menuBtn");
 
 let allWorks = [];
+
+
+/* =========================================================
+   NORMALIZE URL
+========================================================= */
+
+/*
+    هذه الدالة تضمن أن الرابط ينتهي بـ .html
+
+    solo-leveling
+        ↓
+    solo-leveling.html
+
+    solo-leveling.html
+        ↓
+    solo-leveling.html
+*/
+
+function normalizeHtmlFile(filename) {
+
+    if (!filename) {
+        return "";
+    }
+
+    filename = String(filename).trim();
+
+    if (!filename.toLowerCase().endsWith(".html")) {
+        filename += ".html";
+    }
+
+    return filename;
+}
+
+
+/* =========================================================
+   GET WORK PAGE URL
+========================================================= */
+
+function getWorkUrl(work) {
+
+    /*
+        نوع المحتوى يحدد المجلد
+    */
+
+    const folder =
+        String(work.type || "Manga").toLowerCase() === "manhwa"
+            ? "Manhwa"
+            : "Manga";
+
+
+    /*
+        نستخدم page أولاً.
+
+        مثال:
+        "solo-leveling.html"
+    */
+
+    let page = work.page;
+
+
+    /*
+        إذا لم يوجد page،
+        نستخدم slug ونضيف .html
+    */
+
+    if (!page) {
+        page = work.slug;
+    }
+
+
+    /*
+        تأكد من وجود .html
+    */
+
+    page = normalizeHtmlFile(page);
+
+
+    /*
+        النتيجة:
+
+        files/Manga/solo-leveling.html
+    */
+
+    return `files/${folder}/${page}`;
+}
+
+
+/* =========================================================
+   GET CHAPTER URL
+========================================================= */
+
+function getChapterUrl(work) {
+
+    const folder =
+        String(work.type || "Manga").toLowerCase() === "manhwa"
+            ? "Manhwa"
+            : "Manga";
+
+
+    if (!work.latestChapterUrl) {
+        return getWorkUrl(work);
+    }
+
+
+    const chapter =
+        normalizeHtmlFile(
+            work.latestChapterUrl
+        );
+
+
+    /*
+        files/Manga/
+        solo-leveling-chapter-2.html
+    */
+
+    return `files/${folder}/${chapter}`;
+}
 
 
 /* =========================================================
@@ -65,54 +165,71 @@ async function loadWorks() {
         </div>
     `;
 
+
     try {
 
-        const requests = SOURCES.map(async source => {
+        const requests =
+            SOURCES.map(async source => {
 
-            try {
+                try {
 
-                const response = await fetch(
-                    source.file,
-                    {
-                        cache: "no-store"
+                    const response =
+                        await fetch(
+                            source.file,
+                            {
+                                cache: "no-store"
+                            }
+                        );
+
+
+                    if (!response.ok) {
+
+                        throw new Error(
+                            `${source.file} HTTP ${response.status}`
+                        );
+
                     }
-                );
 
-                if (!response.ok) {
-                    throw new Error(
-                        `${source.file} HTTP ${response.status}`
+
+                    const data =
+                        await response.json();
+
+
+                    if (!Array.isArray(data)) {
+                        return [];
+                    }
+
+
+                    return data.map(work => ({
+
+                        ...work,
+
+                        type:
+                            work.type ||
+                            source.type
+
+                    }));
+
+
+                } catch (error) {
+
+                    console.error(
+                        "فشل تحميل:",
+                        source.file,
+                        error
                     );
-                }
 
-                const data =
-                    await response.json();
-
-                if (!Array.isArray(data)) {
                     return [];
+
                 }
 
-                return data.map(work => ({
-                    ...work,
-                    type: work.type || source.type
-                }));
-
-            } catch (error) {
-
-                console.error(
-                    "فشل تحميل:",
-                    source.file,
-                    error
-                );
-
-                return [];
-
-            }
-
-        });
+            });
 
 
         const results =
-            await Promise.all(requests);
+            await Promise.all(
+                requests
+            );
 
 
         allWorks =
@@ -124,6 +241,7 @@ async function loadWorks() {
         renderPopular(allWorks);
 
         updateHero(allWorks);
+
 
     } catch (error) {
 
@@ -149,6 +267,7 @@ function renderWorks(works) {
 
     mangaGrid.innerHTML = "";
 
+
     if (!works.length) {
 
         noResults.hidden = false;
@@ -157,9 +276,12 @@ function renderWorks(works) {
             "0 عمل";
 
         return;
+
     }
 
+
     noResults.hidden = true;
+
 
     mangaCount.textContent =
         `${works.length} عمل`;
@@ -189,25 +311,28 @@ function createWorkCard(work) {
     const article =
         document.createElement("article");
 
+
     article.className =
         "manga-card";
+
 
     article.dataset.title =
         work.name || "";
 
 
-    /* -----------------------------------------
-       COVER
-    ----------------------------------------- */
+    /* -------------------------------
+       DATA
+    -------------------------------- */
+
+    const name =
+        work.name ||
+        "بدون اسم";
+
 
     const cover =
         work.cover ||
-        "https://picsum.photos/500/750";
+        "https://picsum.photos/500/750?random=99";
 
-
-    /* -----------------------------------------
-       STATUS
-    ----------------------------------------- */
 
     const status =
         work.status ||
@@ -220,15 +345,11 @@ function createWorkCard(work) {
             : "ongoing";
 
 
-    /* -----------------------------------------
-       INFO
-    ----------------------------------------- */
-
     const rating =
         work.rating ?? "—";
 
 
-    const chapter =
+    const latestChapter =
         work.latestChapter ?? "—";
 
 
@@ -236,72 +357,38 @@ function createWorkCard(work) {
         work.type || "";
 
 
-    /* -----------------------------------------
-       FOLDER
-    ----------------------------------------- */
-
-    const folder =
-        type === "Manhwa"
-            ? "Manhwa"
-            : "Manga";
-
+    /* -------------------------------
+       URLS
+    -------------------------------- */
 
     /*
-       صفحة العمل
+        صفحة العمل
 
-       مثال:
+        مثال:
 
-       files/Manga/solo-leveling.html
-
-       أو:
-
-       files/Manhwa/solo-leveling.html
+        files/Manga/solo-leveling.html
     */
-
-    const workPage =
-        work.page ||
-        `${work.slug}.html`;
-
 
     const workUrl =
-        `files/${folder}/${workPage}`;
+        getWorkUrl(work);
 
 
     /*
-       الفصل الأخير
+        آخر فصل
 
-       مثال:
+        مثال:
 
-       files/Manhwa/
-       solo-leveling-chapter-2.html
+        files/Manga/
+        solo-leveling-chapter-2.html
     */
 
-    let chapterUrl =
-        work.latestChapterUrl ||
-        "";
+    const chapterUrl =
+        getChapterUrl(work);
 
 
-    if (chapterUrl) {
-
-        chapterUrl =
-            `files/${folder}/${chapterUrl}`;
-
-    } else {
-
-        /*
-           إذا لم يوجد فصل أخير
-           نرجع إلى صفحة العمل
-        */
-
-        chapterUrl =
-            workUrl;
-
-    }
-
-
-    /* -----------------------------------------
-       CARD HTML
-    ----------------------------------------- */
+    /* -------------------------------
+       CARD
+    -------------------------------- */
 
     article.innerHTML = `
 
@@ -309,7 +396,7 @@ function createWorkCard(work) {
 
             <img
                 src="${escapeAttribute(cover)}"
-                alt="${escapeAttribute(work.name || "")}"
+                alt="${escapeAttribute(name)}"
                 loading="lazy"
                 onerror="
                     this.src='https://picsum.photos/500/750?random=99'
@@ -324,7 +411,7 @@ function createWorkCard(work) {
                 class="favorite"
                 aria-label="إضافة للمفضلة"
                 data-favorite="${escapeAttribute(
-                    work.slug || work.name || ""
+                    work.slug || name
                 )}">
                 ♡
             </button>
@@ -335,15 +422,19 @@ function createWorkCard(work) {
         <div class="manga-content">
 
             <h3
-                title="${escapeAttribute(work.name || "")}">
-                ${escapeHTML(
-                    work.name || "بدون اسم"
-                )}
+                title="${escapeAttribute(name)}">
+
+                ${escapeHTML(name)}
+
             </h3>
 
 
             <div class="rating">
-                ⭐ ${escapeHTML(String(rating))}
+
+                ⭐ ${escapeHTML(
+                    String(rating)
+                )}
+
             </div>
 
 
@@ -351,7 +442,7 @@ function createWorkCard(work) {
 
                 <span>
                     الفصل ${escapeHTML(
-                        String(chapter)
+                        String(latestChapter)
                     )}
                 </span>
 
@@ -365,28 +456,29 @@ function createWorkCard(work) {
             <div class="card-buttons">
 
                 <!--
-                    زر العمل
-
-                    مهم:
-                    هذا يفتح صفحة العمل
+                    صفحة العمل
                     وليس الفصل
                 -->
 
                 <a
                     href="${escapeAttribute(workUrl)}"
                     class="read-btn">
+
                     📖 العمل
+
                 </a>
 
 
                 <!--
-                    زر الفصل الأخير
+                    آخر فصل
                 -->
 
                 <a
                     href="${escapeAttribute(chapterUrl)}"
                     class="download-btn">
+
                     الفصل الأخير
+
                 </a>
 
             </div>
@@ -397,7 +489,6 @@ function createWorkCard(work) {
 
 
     return article;
-
 }
 
 
@@ -409,6 +500,7 @@ function renderPopular(works) {
 
     popularList.innerHTML = "";
 
+
     if (!works.length) {
 
         popularList.innerHTML = `
@@ -418,7 +510,6 @@ function renderPopular(works) {
         `;
 
         return;
-
     }
 
 
@@ -435,21 +526,6 @@ function renderPopular(works) {
     sorted.forEach(
         (work, index) => {
 
-            const folder =
-                work.type === "Manhwa"
-                    ? "Manhwa"
-                    : "Manga";
-
-
-            const workPage =
-                work.page ||
-                `${work.slug}.html`;
-
-
-            const workUrl =
-                `files/${folder}/${workPage}`;
-
-
             const item =
                 document.createElement("div");
 
@@ -458,16 +534,30 @@ function renderPopular(works) {
                 "popular-item";
 
 
+            const name =
+                work.name ||
+                "بدون اسم";
+
+
             const genres =
                 Array.isArray(work.genres)
                     ? work.genres
                     : [];
 
 
+            const workUrl =
+                getWorkUrl(work);
+
+
             item.innerHTML = `
 
                 <span class="rank">
-                    ${String(index + 1).padStart(2, "0")}
+
+                    ${String(index + 1).padStart(
+                        2,
+                        "0"
+                    )}
+
                 </span>
 
 
@@ -476,9 +566,7 @@ function renderPopular(works) {
                         work.cover ||
                         "https://picsum.photos/300/450"
                     )}"
-                    alt="${escapeAttribute(
-                        work.name || ""
-                    )}"
+                    alt="${escapeAttribute(name)}"
                     loading="lazy"
                 >
 
@@ -486,26 +574,30 @@ function renderPopular(works) {
                 <div>
 
                     <h3>
-                        ${escapeHTML(
-                            work.name || ""
-                        )}
+                        ${escapeHTML(name)}
                     </h3>
 
 
                     <p>
-                        ${genres.map(
-                            genre =>
-                                escapeHTML(genre)
-                        ).join(" • ")}
+                        ${genres
+                            .map(
+                                genre =>
+                                    escapeHTML(
+                                        genre
+                                    )
+                            )
+                            .join(" • ")}
                     </p>
 
 
                     <strong>
+
                         ⭐ ${escapeHTML(
                             String(
                                 work.rating || "—"
                             )
                         )}
+
                     </strong>
 
                 </div>
@@ -520,6 +612,11 @@ function renderPopular(works) {
             item.addEventListener(
                 "click",
                 () => {
+
+                    /*
+                        يفتح صفحة العمل
+                        وليس الفصل
+                    */
 
                     window.location.href =
                         workUrl;
@@ -556,36 +653,80 @@ function updateHero(works) {
             )[0];
 
 
-    document.getElementById(
-        "heroTitle"
-    ).textContent =
-        best.name || "MangaX";
+    const heroTitle =
+        document.getElementById(
+            "heroTitle"
+        );
 
 
-    document.getElementById(
-        "heroRating"
-    ).textContent =
-        `⭐ ${best.rating || "—"}`;
+    const heroDescription =
+        document.getElementById(
+            "heroDescription"
+        );
 
 
-    document.getElementById(
-        "heroChapter"
-    ).textContent =
-        `📚 الفصل ${best.latestChapter || "—"}`;
+    const heroRating =
+        document.getElementById(
+            "heroRating"
+        );
 
 
-    document.getElementById(
-        "heroType"
-    ).textContent =
-        `📖 ${best.type || ""}`;
+    const heroChapter =
+        document.getElementById(
+            "heroChapter"
+        );
 
 
-    document.getElementById(
-        "heroDescription"
-    ).textContent =
-        `${(best.genres || []).join(" • ")} — ${
-            best.status || ""
-        }`;
+    const heroType =
+        document.getElementById(
+            "heroType"
+        );
+
+
+    if (heroTitle) {
+
+        heroTitle.textContent =
+            best.name || "MangaX";
+
+    }
+
+
+    if (heroRating) {
+
+        heroRating.textContent =
+            `⭐ ${best.rating || "—"}`;
+
+    }
+
+
+    if (heroChapter) {
+
+        heroChapter.textContent =
+            `📚 الفصل ${
+                best.latestChapter || "—"
+            }`;
+
+    }
+
+
+    if (heroType) {
+
+        heroType.textContent =
+            `📖 ${best.type || ""}`;
+
+    }
+
+
+    if (heroDescription) {
+
+        heroDescription.textContent =
+            `${(
+                best.genres || []
+            ).join(" • ")} — ${
+                best.status || ""
+            }`;
+
+    }
 
 
     const hero =
@@ -594,7 +735,10 @@ function updateHero(works) {
         );
 
 
-    if (best.cover) {
+    if (
+        hero &&
+        best.cover
+    ) {
 
         hero.style.backgroundImage =
             `url("${best.cover}")`;
@@ -608,102 +752,114 @@ function updateHero(works) {
    SEARCH
 ========================================================= */
 
-searchToggle.addEventListener(
-    "click",
-    () => {
+if (searchToggle) {
 
-        searchPanel.classList.toggle(
-            "open"
-        );
+    searchToggle.addEventListener(
+        "click",
+        () => {
 
-
-        if (
-            searchPanel.classList.contains(
+            searchPanel.classList.toggle(
                 "open"
-            )
-        ) {
+            );
+
+
+            if (
+                searchPanel.classList.contains(
+                    "open"
+                )
+            ) {
+
+                searchInput.focus();
+
+            }
+
+        }
+    );
+
+}
+
+
+if (searchInput) {
+
+    searchInput.addEventListener(
+        "input",
+        () => {
+
+            const query =
+                searchInput.value
+                    .trim()
+                    .toLowerCase();
+
+
+            if (!query) {
+
+                renderWorks(allWorks);
+
+                return;
+
+            }
+
+
+            const filtered =
+                allWorks.filter(
+                    work => {
+
+                        const name =
+                            String(
+                                work.name || ""
+                            ).toLowerCase();
+
+
+                        const genres =
+                            Array.isArray(
+                                work.genres
+                            )
+                                ? work.genres
+                                    .join(" ")
+                                    .toLowerCase()
+                                : "";
+
+
+                        const type =
+                            String(
+                                work.type || ""
+                            ).toLowerCase();
+
+
+                        return (
+                            name.includes(query) ||
+                            genres.includes(query) ||
+                            type.includes(query)
+                        );
+
+                    }
+                );
+
+
+            renderWorks(filtered);
+
+        }
+    );
+
+}
+
+
+if (clearSearch) {
+
+    clearSearch.addEventListener(
+        "click",
+        () => {
+
+            searchInput.value = "";
+
+            renderWorks(allWorks);
 
             searchInput.focus();
 
         }
+    );
 
-    }
-);
-
-
-searchInput.addEventListener(
-    "input",
-    () => {
-
-        const query =
-            searchInput.value
-                .trim()
-                .toLowerCase();
-
-
-        if (!query) {
-
-            renderWorks(allWorks);
-
-            return;
-
-        }
-
-
-        const filtered =
-            allWorks.filter(
-                work => {
-
-                    const name =
-                        String(
-                            work.name || ""
-                        ).toLowerCase();
-
-
-                    const genres =
-                        Array.isArray(
-                            work.genres
-                        )
-                            ? work.genres
-                                .join(" ")
-                                .toLowerCase()
-                            : "";
-
-
-                    const type =
-                        String(
-                            work.type || ""
-                        ).toLowerCase();
-
-
-                    return (
-                        name.includes(query) ||
-                        genres.includes(query) ||
-                        type.includes(query)
-                    );
-
-                }
-            );
-
-
-        renderWorks(filtered);
-
-    }
-);
-
-
-clearSearch.addEventListener(
-    "click",
-    () => {
-
-        searchInput.value = "";
-
-        renderWorks(allWorks);
-
-        searchInput.focus();
-
-    }
-);
+}
 
 
 /* =========================================================
@@ -716,107 +872,135 @@ const savedTheme =
     );
 
 
-if (savedTheme === "light") {
+if (
+    savedTheme === "light"
+) {
 
     document.body.classList.add(
         "light"
     );
 
-    themeBtn.textContent = "☀";
+
+    if (themeBtn) {
+        themeBtn.textContent = "☀";
+    }
 
 }
 
 
-themeBtn.addEventListener(
-    "click",
-    () => {
+if (themeBtn) {
 
-        document.body.classList.toggle(
-            "light"
-        );
+    themeBtn.addEventListener(
+        "click",
+        () => {
 
-
-        const light =
-            document.body.classList.contains(
+            document.body.classList.toggle(
                 "light"
             );
 
 
-        localStorage.setItem(
-            "mangax-theme",
-            light
-                ? "light"
-                : "dark"
-        );
+            const isLight =
+                document.body.classList.contains(
+                    "light"
+                );
 
 
-        themeBtn.textContent =
-            light
-                ? "☀"
-                : "☾";
+            localStorage.setItem(
+                "mangax-theme",
+                isLight
+                    ? "light"
+                    : "dark"
+            );
 
-    }
-);
+
+            themeBtn.textContent =
+                isLight
+                    ? "☀"
+                    : "☾";
+
+        }
+    );
+
+}
 
 
 /* =========================================================
    MOBILE MENU
 ========================================================= */
 
-menuBtn.addEventListener(
-    "click",
-    () => {
+if (menuBtn) {
 
-        const navigation =
-            document.querySelector(
-                ".navigation"
-            );
+    menuBtn.addEventListener(
+        "click",
+        () => {
+
+            const navigation =
+                document.querySelector(
+                    ".navigation"
+                );
 
 
-        if (
-            navigation.style.display ===
-            "flex"
-        ) {
+            if (!navigation) {
+                return;
+            }
 
-            navigation.style.display = "";
 
-            return;
+            if (
+                navigation.style.display ===
+                "flex"
+            ) {
+
+                navigation.style.display =
+                    "";
+
+                return;
+
+            }
+
+
+            navigation.style.display =
+                "flex";
+
+
+            navigation.style.position =
+                "absolute";
+
+
+            navigation.style.top =
+                "68px";
+
+
+            navigation.style.right =
+                "10px";
+
+
+            navigation.style.left =
+                "10px";
+
+
+            navigation.style.padding =
+                "15px";
+
+
+            navigation.style.background =
+                "var(--card)";
+
+
+            navigation.style.border =
+                "1px solid var(--border)";
+
+
+            navigation.style.borderRadius =
+                "15px";
+
+
+            navigation.style.flexDirection =
+                "column";
 
         }
+    );
 
-
-        navigation.style.display =
-            "flex";
-
-        navigation.style.position =
-            "absolute";
-
-        navigation.style.top =
-            "68px";
-
-        navigation.style.right =
-            "10px";
-
-        navigation.style.left =
-            "10px";
-
-        navigation.style.padding =
-            "15px";
-
-        navigation.style.background =
-            "var(--card)";
-
-        navigation.style.border =
-            "1px solid var(--border)";
-
-        navigation.style.borderRadius =
-            "15px";
-
-        navigation.style.flexDirection =
-            "column";
-
-    }
-);
+}
 
 
 /* =========================================================
@@ -836,12 +1020,12 @@ function setupFavorites() {
                     button.dataset.favorite;
 
 
-                let saved = [];
+                let favorites = [];
 
 
                 try {
 
-                    saved =
+                    favorites =
                         JSON.parse(
                             localStorage.getItem(
                                 "mangax-favorites"
@@ -850,18 +1034,19 @@ function setupFavorites() {
 
                 } catch {
 
-                    saved = [];
+                    favorites = [];
 
                 }
 
 
                 if (
-                    saved.includes(id)
+                    favorites.includes(id)
                 ) {
 
                     button.classList.add(
                         "active"
                     );
+
 
                     button.textContent =
                         "♥";
@@ -878,12 +1063,13 @@ function setupFavorites() {
                         event.stopPropagation();
 
 
-                        let favorites = [];
+                        let currentFavorites =
+                            [];
 
 
                         try {
 
-                            favorites =
+                            currentFavorites =
                                 JSON.parse(
                                     localStorage.getItem(
                                         "mangax-favorites"
@@ -892,17 +1078,20 @@ function setupFavorites() {
 
                         } catch {
 
-                            favorites = [];
+                            currentFavorites =
+                                [];
 
                         }
 
 
                         if (
-                            favorites.includes(id)
+                            currentFavorites.includes(
+                                id
+                            )
                         ) {
 
-                            favorites =
-                                favorites.filter(
+                            currentFavorites =
+                                currentFavorites.filter(
                                     item =>
                                         item !== id
                                 );
@@ -918,7 +1107,9 @@ function setupFavorites() {
 
                         } else {
 
-                            favorites.push(id);
+                            currentFavorites.push(
+                                id
+                            );
 
 
                             button.classList.add(
@@ -935,7 +1126,7 @@ function setupFavorites() {
                         localStorage.setItem(
                             "mangax-favorites",
                             JSON.stringify(
-                                favorites
+                                currentFavorites
                             )
                         );
 
@@ -949,7 +1140,7 @@ function setupFavorites() {
 
 
 /* =========================================================
-   HTML ESCAPING
+   ESCAPE HTML
 ========================================================= */
 
 function escapeHTML(value) {
