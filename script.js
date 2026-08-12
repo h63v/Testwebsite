@@ -1,6 +1,5 @@
 "use strict";
 
-
 /* =========================================================
    CONFIG
 ========================================================= */
@@ -60,8 +59,11 @@ let allWorks = [];
 
 async function loadWorks() {
 
-    mangaGrid.innerHTML =
-        `<div class="loading">جاري تحميل الأعمال...</div>`;
+    mangaGrid.innerHTML = `
+        <div class="loading">
+            جاري تحميل الأعمال...
+        </div>
+    `;
 
     try {
 
@@ -69,10 +71,12 @@ async function loadWorks() {
 
             try {
 
-                const response =
-                    await fetch(source.file, {
+                const response = await fetch(
+                    source.file,
+                    {
                         cache: "no-store"
-                    });
+                    }
+                );
 
                 if (!response.ok) {
                     throw new Error(
@@ -101,6 +105,7 @@ async function loadWorks() {
                 );
 
                 return [];
+
             }
 
         });
@@ -108,6 +113,7 @@ async function loadWorks() {
 
         const results =
             await Promise.all(requests);
+
 
         allWorks =
             results.flat();
@@ -129,7 +135,9 @@ async function loadWorks() {
 
         mangaCount.textContent =
             "حدث خطأ في تحميل الأعمال";
+
     }
+
 }
 
 
@@ -166,12 +174,14 @@ function renderWorks(works) {
 
     });
 
+
     setupFavorites();
+
 }
 
 
 /* =========================================================
-   CREATE CARD
+   CREATE WORK CARD
 ========================================================= */
 
 function createWorkCard(work) {
@@ -186,10 +196,18 @@ function createWorkCard(work) {
         work.name || "";
 
 
+    /* -----------------------------------------
+       COVER
+    ----------------------------------------- */
+
     const cover =
         work.cover ||
         "https://picsum.photos/500/750";
 
+
+    /* -----------------------------------------
+       STATUS
+    ----------------------------------------- */
 
     const status =
         work.status ||
@@ -202,32 +220,43 @@ function createWorkCard(work) {
             : "ongoing";
 
 
+    /* -----------------------------------------
+       INFO
+    ----------------------------------------- */
+
     const rating =
-        work.rating ||
-        "—";
+        work.rating ?? "—";
 
 
     const chapter =
-        work.latestChapter ??
-        "—";
+        work.latestChapter ?? "—";
 
 
     const type =
-        work.type ||
-        "";
+        work.type || "";
 
 
-    /*
-       رابط صفحة العمل
-       مثال:
-       files/Manga/solo-leveling.html
-    */
+    /* -----------------------------------------
+       FOLDER
+    ----------------------------------------- */
 
     const folder =
         type === "Manhwa"
             ? "Manhwa"
             : "Manga";
 
+
+    /*
+       صفحة العمل
+
+       مثال:
+
+       files/Manga/solo-leveling.html
+
+       أو:
+
+       files/Manhwa/solo-leveling.html
+    */
 
     const workPage =
         work.page ||
@@ -239,7 +268,12 @@ function createWorkCard(work) {
 
 
     /*
-       رابط الفصل الأخير
+       الفصل الأخير
+
+       مثال:
+
+       files/Manhwa/
+       solo-leveling-chapter-2.html
     */
 
     let chapterUrl =
@@ -254,11 +288,20 @@ function createWorkCard(work) {
 
     } else {
 
+        /*
+           إذا لم يوجد فصل أخير
+           نرجع إلى صفحة العمل
+        */
+
         chapterUrl =
             workUrl;
 
     }
 
+
+    /* -----------------------------------------
+       CARD HTML
+    ----------------------------------------- */
 
     article.innerHTML = `
 
@@ -268,7 +311,9 @@ function createWorkCard(work) {
                 src="${escapeAttribute(cover)}"
                 alt="${escapeAttribute(work.name || "")}"
                 loading="lazy"
-                onerror="this.src='https://picsum.photos/500/750?random=99'"
+                onerror="
+                    this.src='https://picsum.photos/500/750?random=99'
+                "
             >
 
             <span class="status ${statusClass}">
@@ -278,7 +323,9 @@ function createWorkCard(work) {
             <button
                 class="favorite"
                 aria-label="إضافة للمفضلة"
-                data-favorite="${escapeAttribute(work.slug || work.name || "")}">
+                data-favorite="${escapeAttribute(
+                    work.slug || work.name || ""
+                )}">
                 ♡
             </button>
 
@@ -287,8 +334,11 @@ function createWorkCard(work) {
 
         <div class="manga-content">
 
-            <h3 title="${escapeAttribute(work.name || "")}">
-                ${escapeHTML(work.name || "بدون اسم")}
+            <h3
+                title="${escapeAttribute(work.name || "")}">
+                ${escapeHTML(
+                    work.name || "بدون اسم"
+                )}
             </h3>
 
 
@@ -300,7 +350,9 @@ function createWorkCard(work) {
             <div class="chapter-row">
 
                 <span>
-                    الفصل ${escapeHTML(String(chapter))}
+                    الفصل ${escapeHTML(
+                        String(chapter)
+                    )}
                 </span>
 
                 <span>
@@ -312,16 +364,29 @@ function createWorkCard(work) {
 
             <div class="card-buttons">
 
-                <a
-                    href="${escapeAttribute(chapterUrl)}"
-                    class="read-btn">
-                    ▶ قراءة
-                </a>
+                <!--
+                    زر العمل
+
+                    مهم:
+                    هذا يفتح صفحة العمل
+                    وليس الفصل
+                -->
 
                 <a
                     href="${escapeAttribute(workUrl)}"
+                    class="read-btn">
+                    📖 العمل
+                </a>
+
+
+                <!--
+                    زر الفصل الأخير
+                -->
+
+                <a
+                    href="${escapeAttribute(chapterUrl)}"
                     class="download-btn">
-                    ↓ الفصول
+                    الفصل الأخير
                 </a>
 
             </div>
@@ -330,7 +395,9 @@ function createWorkCard(work) {
 
     `;
 
+
     return article;
+
 }
 
 
@@ -344,10 +411,14 @@ function renderPopular(works) {
 
     if (!works.length) {
 
-        popularList.innerHTML =
-            `<div class="loading">لا توجد أعمال.</div>`;
+        popularList.innerHTML = `
+            <div class="loading">
+                لا توجد أعمال.
+            </div>
+        `;
 
         return;
+
     }
 
 
@@ -361,76 +432,107 @@ function renderPopular(works) {
             .slice(0, 4);
 
 
-    sorted.forEach((work, index) => {
+    sorted.forEach(
+        (work, index) => {
 
-        const folder =
-            work.type === "Manhwa"
-                ? "Manhwa"
-                : "Manga";
-
-
-        const item =
-            document.createElement("div");
-
-        item.className =
-            "popular-item";
+            const folder =
+                work.type === "Manhwa"
+                    ? "Manhwa"
+                    : "Manga";
 
 
-        item.innerHTML = `
-
-            <span class="rank">
-                ${String(index + 1).padStart(2, "0")}
-            </span>
-
-            <img
-                src="${escapeAttribute(work.cover || "https://picsum.photos/300/450")}"
-                alt="${escapeAttribute(work.name || "")}"
-                loading="lazy"
-            >
-
-            <div>
-
-                <h3>
-                    ${escapeHTML(work.name || "")}
-                </h3>
-
-                <p>
-                    ${(work.genres || []).map(
-                        genre => escapeHTML(genre)
-                    ).join(" • ")}
-                </p>
-
-                <strong>
-                    ⭐ ${escapeHTML(String(work.rating || "—"))}
-                </strong>
-
-            </div>
-
-        `;
+            const workPage =
+                work.page ||
+                `${work.slug}.html`;
 
 
-        item.style.cursor =
-            "pointer";
+            const workUrl =
+                `files/${folder}/${workPage}`;
 
 
-        item.addEventListener(
-            "click",
-            () => {
+            const item =
+                document.createElement("div");
 
-                if (work.slug) {
+
+            item.className =
+                "popular-item";
+
+
+            const genres =
+                Array.isArray(work.genres)
+                    ? work.genres
+                    : [];
+
+
+            item.innerHTML = `
+
+                <span class="rank">
+                    ${String(index + 1).padStart(2, "0")}
+                </span>
+
+
+                <img
+                    src="${escapeAttribute(
+                        work.cover ||
+                        "https://picsum.photos/300/450"
+                    )}"
+                    alt="${escapeAttribute(
+                        work.name || ""
+                    )}"
+                    loading="lazy"
+                >
+
+
+                <div>
+
+                    <h3>
+                        ${escapeHTML(
+                            work.name || ""
+                        )}
+                    </h3>
+
+
+                    <p>
+                        ${genres.map(
+                            genre =>
+                                escapeHTML(genre)
+                        ).join(" • ")}
+                    </p>
+
+
+                    <strong>
+                        ⭐ ${escapeHTML(
+                            String(
+                                work.rating || "—"
+                            )
+                        )}
+                    </strong>
+
+                </div>
+
+            `;
+
+
+            item.style.cursor =
+                "pointer";
+
+
+            item.addEventListener(
+                "click",
+                () => {
 
                     window.location.href =
-                        `files/${folder}/${work.slug}.html`;
+                        workUrl;
 
                 }
-
-            }
-        );
+            );
 
 
-        popularList.appendChild(item);
+            popularList.appendChild(item);
 
-    });
+        }
+    );
+
 }
 
 
@@ -440,7 +542,9 @@ function renderPopular(works) {
 
 function updateHero(works) {
 
-    if (!works.length) return;
+    if (!works.length) {
+        return;
+    }
 
 
     const best =
@@ -452,33 +556,42 @@ function updateHero(works) {
             )[0];
 
 
-    document.getElementById("heroTitle")
-        .textContent =
+    document.getElementById(
+        "heroTitle"
+    ).textContent =
         best.name || "MangaX";
 
 
-    document.getElementById("heroRating")
-        .textContent =
+    document.getElementById(
+        "heroRating"
+    ).textContent =
         `⭐ ${best.rating || "—"}`;
 
 
-    document.getElementById("heroChapter")
-        .textContent =
+    document.getElementById(
+        "heroChapter"
+    ).textContent =
         `📚 الفصل ${best.latestChapter || "—"}`;
 
 
-    document.getElementById("heroType")
-        .textContent =
+    document.getElementById(
+        "heroType"
+    ).textContent =
         `📖 ${best.type || ""}`;
 
 
-    document.getElementById("heroDescription")
-        .textContent =
-        `${(best.genres || []).join(" • ")} — ${best.status || ""}`;
+    document.getElementById(
+        "heroDescription"
+    ).textContent =
+        `${(best.genres || []).join(" • ")} — ${
+            best.status || ""
+        }`;
 
 
     const hero =
-        document.querySelector(".hero-background");
+        document.querySelector(
+            ".hero-background"
+        );
 
 
     if (best.cover) {
@@ -499,10 +612,15 @@ searchToggle.addEventListener(
     "click",
     () => {
 
-        searchPanel.classList.toggle("open");
+        searchPanel.classList.toggle(
+            "open"
+        );
+
 
         if (
-            searchPanel.classList.contains("open")
+            searchPanel.classList.contains(
+                "open"
+            )
         ) {
 
             searchInput.focus();
@@ -528,35 +646,44 @@ searchInput.addEventListener(
             renderWorks(allWorks);
 
             return;
+
         }
 
 
         const filtered =
-            allWorks.filter(work => {
+            allWorks.filter(
+                work => {
 
-                const name =
-                    String(work.name || "")
-                        .toLowerCase();
-
-
-                const genres =
-                    (work.genres || [])
-                        .join(" ")
-                        .toLowerCase();
+                    const name =
+                        String(
+                            work.name || ""
+                        ).toLowerCase();
 
 
-                const type =
-                    String(work.type || "")
-                        .toLowerCase();
+                    const genres =
+                        Array.isArray(
+                            work.genres
+                        )
+                            ? work.genres
+                                .join(" ")
+                                .toLowerCase()
+                            : "";
 
 
-                return (
-                    name.includes(query) ||
-                    genres.includes(query) ||
-                    type.includes(query)
-                );
+                    const type =
+                        String(
+                            work.type || ""
+                        ).toLowerCase();
 
-            });
+
+                    return (
+                        name.includes(query) ||
+                        genres.includes(query) ||
+                        type.includes(query)
+                    );
+
+                }
+            );
 
 
         renderWorks(filtered);
@@ -584,12 +711,16 @@ clearSearch.addEventListener(
 ========================================================= */
 
 const savedTheme =
-    localStorage.getItem("mangax-theme");
+    localStorage.getItem(
+        "mangax-theme"
+    );
 
 
 if (savedTheme === "light") {
 
-    document.body.classList.add("light");
+    document.body.classList.add(
+        "light"
+    );
 
     themeBtn.textContent = "☀";
 
@@ -600,21 +731,29 @@ themeBtn.addEventListener(
     "click",
     () => {
 
-        document.body.classList.toggle("light");
+        document.body.classList.toggle(
+            "light"
+        );
 
 
         const light =
-            document.body.classList.contains("light");
+            document.body.classList.contains(
+                "light"
+            );
 
 
         localStorage.setItem(
             "mangax-theme",
-            light ? "light" : "dark"
+            light
+                ? "light"
+                : "dark"
         );
 
 
         themeBtn.textContent =
-            light ? "☀" : "☾";
+            light
+                ? "☀"
+                : "☾";
 
     }
 );
@@ -629,49 +768,52 @@ menuBtn.addEventListener(
     () => {
 
         const navigation =
-            document.querySelector(".navigation");
+            document.querySelector(
+                ".navigation"
+            );
 
 
         if (
-            navigation.style.display === "flex"
+            navigation.style.display ===
+            "flex"
         ) {
 
-            navigation.style.display =
-                "";
+            navigation.style.display = "";
 
-        } else {
-
-            navigation.style.display =
-                "flex";
-
-            navigation.style.position =
-                "absolute";
-
-            navigation.style.top =
-                "68px";
-
-            navigation.style.right =
-                "10px";
-
-            navigation.style.left =
-                "10px";
-
-            navigation.style.padding =
-                "15px";
-
-            navigation.style.background =
-                "var(--card)";
-
-            navigation.style.border =
-                "1px solid var(--border)";
-
-            navigation.style.borderRadius =
-                "15px";
-
-            navigation.style.flexDirection =
-                "column";
+            return;
 
         }
+
+
+        navigation.style.display =
+            "flex";
+
+        navigation.style.position =
+            "absolute";
+
+        navigation.style.top =
+            "68px";
+
+        navigation.style.right =
+            "10px";
+
+        navigation.style.left =
+            "10px";
+
+        navigation.style.padding =
+            "15px";
+
+        navigation.style.background =
+            "var(--card)";
+
+        navigation.style.border =
+            "1px solid var(--border)";
+
+        navigation.style.borderRadius =
+            "15px";
+
+        navigation.style.flexDirection =
+            "column";
 
     }
 );
@@ -684,102 +826,155 @@ menuBtn.addEventListener(
 function setupFavorites() {
 
     document
-        .querySelectorAll(".favorite")
-        .forEach(button => {
+        .querySelectorAll(
+            ".favorite"
+        )
+        .forEach(
+            button => {
 
-            const id =
-                button.dataset.favorite;
-
-
-            const saved =
-                JSON.parse(
-                    localStorage.getItem(
-                        "mangax-favorites"
-                    ) || "[]"
-                );
+                const id =
+                    button.dataset.favorite;
 
 
-            if (saved.includes(id)) {
-
-                button.classList.add("active");
-
-                button.textContent = "♥";
-
-            }
+                let saved = [];
 
 
-            button.addEventListener(
-                "click",
-                event => {
+                try {
 
-                    event.preventDefault();
-
-                    event.stopPropagation();
-
-
-                    let favorites =
+                    saved =
                         JSON.parse(
                             localStorage.getItem(
                                 "mangax-favorites"
                             ) || "[]"
                         );
 
+                } catch {
 
-                    if (
-                        favorites.includes(id)
-                    ) {
-
-                        favorites =
-                            favorites.filter(
-                                item => item !== id
-                            );
-
-                        button.classList.remove(
-                            "active"
-                        );
-
-                        button.textContent =
-                            "♡";
-
-                    } else {
-
-                        favorites.push(id);
-
-                        button.classList.add(
-                            "active"
-                        );
-
-                        button.textContent =
-                            "♥";
-
-                    }
-
-
-                    localStorage.setItem(
-                        "mangax-favorites",
-                        JSON.stringify(favorites)
-                    );
+                    saved = [];
 
                 }
-            );
 
-        });
+
+                if (
+                    saved.includes(id)
+                ) {
+
+                    button.classList.add(
+                        "active"
+                    );
+
+                    button.textContent =
+                        "♥";
+
+                }
+
+
+                button.addEventListener(
+                    "click",
+                    event => {
+
+                        event.preventDefault();
+
+                        event.stopPropagation();
+
+
+                        let favorites = [];
+
+
+                        try {
+
+                            favorites =
+                                JSON.parse(
+                                    localStorage.getItem(
+                                        "mangax-favorites"
+                                    ) || "[]"
+                                );
+
+                        } catch {
+
+                            favorites = [];
+
+                        }
+
+
+                        if (
+                            favorites.includes(id)
+                        ) {
+
+                            favorites =
+                                favorites.filter(
+                                    item =>
+                                        item !== id
+                                );
+
+
+                            button.classList.remove(
+                                "active"
+                            );
+
+
+                            button.textContent =
+                                "♡";
+
+                        } else {
+
+                            favorites.push(id);
+
+
+                            button.classList.add(
+                                "active"
+                            );
+
+
+                            button.textContent =
+                                "♥";
+
+                        }
+
+
+                        localStorage.setItem(
+                            "mangax-favorites",
+                            JSON.stringify(
+                                favorites
+                            )
+                        );
+
+                    }
+                );
+
+            }
+        );
 
 }
 
 
 /* =========================================================
-   SECURITY / HTML ESCAPING
+   HTML ESCAPING
 ========================================================= */
 
 function escapeHTML(value) {
 
     return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
+        .replaceAll(
+            "&",
+            "&amp;"
+        )
+        .replaceAll(
+            "<",
+            "&lt;"
+        )
+        .replaceAll(
+            ">",
+            "&gt;"
+        )
+        .replaceAll(
+            '"',
+            "&quot;"
+        )
+        .replaceAll(
+            "'",
+            "&#039;"
+        );
 
 }
 
