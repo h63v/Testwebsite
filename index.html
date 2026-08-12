@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color" content="#0b0b10">
+
+    <title>MangaX - عالم المانجا والمانهوا</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="header-inner">
+
+        <a href="index.html" class="logo">
+            Manga<span>X</span>
+        </a>
+
+        <nav class="navigation">
+            <a href="#home">الرئيسية</a>
+            <a href="#latest">أحدث الأعمال</a>
+            <a href="#popular">الأكثر قراءة</a>
+        </nav>
+
+        <div class="header-actions">
+
+            <button class="icon-btn" id="searchToggle" aria-label="البحث">
+                ⌕
+            </button>
+
+            <button class="icon-btn" id="themeBtn" aria-label="تغيير المظهر">
+                ☾
+            </button>
+
+            <button class="menu-btn" id="menuBtn" aria-label="القائمة">
+                ☰
+            </button>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- SEARCH -->
+
+<div class="search-panel" id="searchPanel">
+
+    <div class="search-container">
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="ابحث عن مانجا أو مانهوا..."
+            autocomplete="off"
+        >
+
+        <button id="clearSearch">
+            ×
+        </button>
+
+    </div>
+
+</div>
+
+
+<main>
+
+    <!-- HERO -->
+
+    <section class="hero" id="home">
+
+        <div class="hero-background"></div>
+
+        <div class="hero-overlay"></div>
+
+        <div class="hero-content">
+
+            <span class="hero-badge">
+                🔥 الأكثر شعبية
+            </span>
+
+            <h1 id="heroTitle">
+                MangaX
+            </h1>
+
+            <p id="heroDescription">
+                اقرأ أحدث المانجا والمانهوا بسهولة.
+            </p>
+
+            <div class="hero-info">
+
+                <span id="heroRating">
+                    ⭐ —
+                </span>
+
+                <span id="heroChapter">
+                    📚 —
+                </span>
+
+                <span id="heroType">
+                    📖 —
+                </span>
+
+            </div>
+
+            <div class="hero-buttons">
+
+                <a
+                    href="#latest"
+                    class="btn primary">
+                    ابدأ القراءة
+                </a>
+
+                <a
+                    href="#latest"
+                    class="btn secondary">
+                    استكشف الأعمال
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- LATEST -->
+
+    <section class="section" id="latest">
+
+        <div class="section-heading">
+
+            <div>
+
+                <span class="small-title">
+                    تحديثات جديدة
+                </span>
+
+                <h2>
+                    أحدث الأعمال
+                </h2>
+
+            </div>
+
+            <span class="manga-count" id="mangaCount">
+                جاري التحميل...
+            </span>
+
+        </div>
+
+
+        <div
+            class="manga-grid"
+            id="mangaGrid">
+        </div>
+
+
+        <div
+            class="no-results"
+            id="noResults"
+            hidden>
+
+            <div class="no-results-icon">
+                🔍
+            </div>
+
+            <h3>
+                لم نجد أي نتائج
+            </h3>
+
+            <p>
+                جرّب البحث باسم عمل آخر.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- POPULAR -->
+
+    <section class="section" id="popular">
+
+        <div class="section-heading">
+
+            <div>
+
+                <span class="small-title">
+                    الأكثر مشاهدة
+                </span>
+
+                <h2>
+                    الأكثر قراءة
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="popular-list"
+            id="popularList">
+
+            <div class="loading">
+                جاري التحميل...
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer>
+
+    <div class="footer-inner">
+
+        <div>
+
+            <div class="logo">
+                Manga<span>X</span>
+            </div>
+
+            <p>
+                منصتك لقراءة المانجا والمانهوا.
+            </p>
+
+        </div>
+
+
+        <div class="footer-links">
+
+            <a href="#home">
+                الرئيسية
+            </a>
+
+            <a href="#latest">
+                أحدث الأعمال
+            </a>
+
+            <a href="#popular">
+                الأكثر قراءة
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="copyright">
+
+        © 2026 MangaX — جميع الحقوق محفوظة
+
+    </div>
+
+</footer>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>

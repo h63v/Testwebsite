@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#0b0b10"
+    >
+
+    <title>MangaX Reader</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            background: #08080d;
+            color: white;
+
+            font-family:
+                Arial,
+                Tahoma,
+                sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+        }
+
+        .reader-header {
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 100;
+
+            height: 70px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 0 20px;
+
+            background:
+                rgba(8,8,13,.95);
+
+            backdrop-filter:
+                blur(15px);
+
+            border-bottom:
+                1px solid #252530;
+        }
+
+        .reader-logo {
+
+            font-size: 28px;
+
+            font-weight: 900;
+        }
+
+        .reader-logo span {
+            color: #8b5cf6;
+        }
+
+        .chapter-title {
+
+            color: #bbb;
+
+            font-size: 15px;
+
+            text-align: center;
+
+            white-space: nowrap;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+
+            max-width: 50%;
+        }
+
+        .close-btn {
+
+            width: 45px;
+
+            height: 45px;
+
+            border-radius: 12px;
+
+            border:
+                1px solid #252530;
+
+            background: #111119;
+
+            color: white;
+
+            text-decoration: none;
+
+            display: grid;
+
+            place-items: center;
+
+            font-size: 25px;
+        }
+
+        .reader {
+
+            width: 100%;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            padding-bottom: 50px;
+        }
+
+        .page {
+
+            width: auto;
+
+            max-width: 100%;
+
+            height: auto;
+
+            display: block;
+
+            margin: 0 auto;
+
+            background: #111;
+
+            object-fit: contain;
+        }
+
+        .loading {
+
+            min-height: 60vh;
+
+            display: grid;
+
+            place-items: center;
+
+            color: #aaa;
+
+            padding: 30px;
+
+            text-align: center;
+        }
+
+        .error {
+
+            min-height: 60vh;
+
+            display: grid;
+
+            place-items: center;
+
+            text-align: center;
+
+            padding: 30px;
+
+            color: #aaa;
+        }
+
+        .error h2 {
+
+            color: white;
+
+            margin-bottom: 10px;
+        }
+
+        .back {
+
+            display: inline-block;
+
+            margin-top: 20px;
+
+            padding: 11px 20px;
+
+            border-radius: 10px;
+
+            background: #8b5cf6;
+
+            color: white;
+
+            text-decoration: none;
+        }
+
+        @media (max-width: 600px) {
+
+            .reader-header {
+                height: 60px;
+
+                padding: 0 10px;
+            }
+
+            .reader-logo {
+                font-size: 23px;
+            }
+
+            .chapter-title {
+                font-size: 12px;
+
+                max-width: 45%;
+            }
+
+            .close-btn {
+                width: 40px;
+                height: 40px;
+            }
+
+            .page {
+                width: 100%;
+
+                max-width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header class="reader-header">
+
+    <a
+        href="index.html"
+        class="close-btn">
+        ×
+    </a>
+
+
+    <div
+        class="chapter-title"
+        id="chapterTitle">
+        جاري تحميل الفصل...
+    </div>
+
+
+    <a
+        href="index.html"
+        class="reader-logo">
+        Manga<span>X</span>
+    </a>
+
+</header>
+
+
+<main
+    class="reader"
+    id="reader">
+
+    <div class="loading">
+        جاري تحميل صور الفصل...
+    </div>
+
+</main>
+
+
+<script>
+
+"use strict";
+
+
+/* =========================================================
+   GET CHAPTER URL
+========================================================= */
+
+const params =
+    new URLSearchParams(
+        window.location.search
+    );
+
+
+const chapterUrl =
+    params.get("chapter");
+
+
+const reader =
+    document.getElementById("reader");
+
+
+const chapterTitle =
+    document.getElementById("chapterTitle");
+
+
+/* =========================================================
+   START
+========================================================= */
+
+if (!chapterUrl) {
+
+    showError(
+        "لم يتم تحديد الفصل."
+    );
+
+} else {
+
+    loadChapter(chapterUrl);
+
+}
+
+
+/* =========================================================
+   LOAD CHAPTER HTML
+========================================================= */
+
+async function loadChapter(url) {
+
+    try {
+
+        chapterTitle.textContent =
+            decodeURIComponent(
+                url.split("/").pop()
+            );
+
+
+        const response =
+            await fetch(url, {
+                cache: "no-store"
+            });
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                `HTTP ${response.status}`
+            );
+
+        }
+
+
+        const html =
+            await response.text();
+
+
+        /*
+           تحويل HTML الفصل إلى Document
+        */
+
+        const parser =
+            new DOMParser();
+
+
+        const documentHTML =
+            parser.parseFromString(
+                html,
+                "text/html"
+            );
+
+
+        /*
+           استخراج كل الصور
+        */
+
+        const images =
+            Array.from(
+                documentHTML.querySelectorAll("img")
+            );
+
+
+        if (!images.length) {
+
+            showError(
+                "لم يتم العثور على أي صور داخل ملف الفصل."
+            );
+
+            return;
+
+        }
+
+
+        reader.innerHTML = "";
+
+
+        /*
+           عرض الصور بالترتيب
+        */
+
+        images.forEach(
+            (originalImage, index) => {
+
+                const image =
+                    document.createElement("img");
+
+
+                let imageUrl =
+                    originalImage.getAttribute("src");
+
+
+                /*
+                   دعم lazy loading
+                */
+
+                if (
+                    !imageUrl ||
+                    imageUrl === "#"
+                ) {
+
+                    imageUrl =
+                        originalImage.getAttribute(
+                            "data-src"
+                        );
+
+                }
+
+
+                if (!imageUrl) return;
+
+
+                /*
+                   تحويل الرابط النسبي
+                   إلى رابط كامل بناءً
+                   على مكان ملف الفصل
+                */
+
+                try {
+
+                    imageUrl =
+                        new URL(
+                            imageUrl,
+                            new URL(
+                                url,
+                                window.location.href
+                            )
+                        ).href;
+
+                } catch (e) {
+
+                    console.error(
+                        "رابط صورة غير صالح:",
+                        imageUrl
+                    );
+
+                    return;
+
+                }
+
+
+                image.className =
+                    "page";
+
+
+                image.loading =
+                    index === 0
+                        ? "eager"
+                        : "lazy";
+
+
+                image.decoding =
+                    "async";
+
+
+                image.src =
+                    imageUrl;
+
+
+                image.alt =
+                    `صفحة ${index + 1}`;
+
+
+                image.onerror =
+                    function () {
+
+                        console.error(
+                            "تعذر تحميل الصورة:",
+                            imageUrl
+                        );
+
+                    };
+
+
+                reader.appendChild(image);
+
+            }
+        );
+
+
+        if (!reader.children.length) {
+
+            showError(
+                "لم يتم العثور على روابط صور صالحة."
+            );
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Reader Error:",
+            error
+        );
+
+
+        showError(
+            "تعذر تحميل ملف الفصل."
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+function showError(message) {
+
+    reader.innerHTML = `
+
+        <div class="error">
+
+            <div>
+
+                <h2>
+                    حدث خطأ
+                </h2>
+
+                <p>
+                    ${escapeHTML(message)}
+                </p>
+
+                <a
+                    href="index.html"
+                    class="back">
+                    العودة للرئيسية
+                </a>
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   ESCAPE
+========================================================= */
+
+function escapeHTML(value) {
+
+    return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+
+}
+
+</script>
+
+</body>
+</html>
